@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+>
+
+<bean class="demospr.wipro.demo.model.Student" id="student" autowire="constructor">
+<constructor-arg  index="1" type="String" value="Sachin">  </constructor-arg>
+<constructor-arg index="0" type="int" value="10">  </constructor-arg>
+</bean>
+
+<!--  autowire by type needs only one matching bean if multiple beans are found it will throw error-->
+<!--  autowire default -> no autowiring-->
+<!--  autowire by name matches the property name with the bean name and injects it-->
+<!--  autowire constructor always injects the bean by calling the constructor can be same as bytype or name -->
+
+
+
+<bean class="demospr.wipro.demo.model.Address" id="address1">
+<constructor-arg  value="karnataka">  </constructor-arg>
+<constructor-arg  value="Banaglore">  </constructor-arg>
+</bean>
+
+
+
+ <bean class="demospr.wipro.demo.model.Address" id="address">
+<constructor-arg  value="maharastra">  </constructor-arg>
+<constructor-arg  value="mumbai">  </constructor-arg>
+</bean>
+
+
+
+
+
+ <context:annotation-config/>  
+</beans>
+
+-------------------model 
+
+
+package demospr.wipro.demo.model;
+
+public class Student {
+
+	int rollNo;
+	
+	
+	String studName;
+	
+	Address address;
+	
+	
+	public Student(int rollNo, String studName, Address address) {
+		super();
+		this.rollNo = rollNo;
+		this.studName = studName;
+		this.address = address;
+	}
+
+
+
+	public Address getAddress() {
+		return address;
+	}
+
+
+
+	public void setAddress(Address address) {
+	System.out.println("set adr");
+		this.address = address;
+	}
+
+
+
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	
+public Student( String studName,int rollNo) {
+		
+		System.out.println("constructor injected hahaha confusion");
+		
+	}
+	
+	public Student(int rollNo, String studName) {
+		super();
+		System.out.println("constructor injected");
+		this.rollNo = rollNo;
+		this.studName = studName;
+	}
+	
+	@Override
+	public String toString() {
+		return "Student [rollNo=" + rollNo + ", studName=" + studName + ", address=" + address + "]";
+	}
+
+
+
+	public int getRollNo() {
+		return rollNo;
+	}
+	public void setRollNo(int rollNo) {
+	System.out.println("setter called");
+		this.rollNo = rollNo;
+	}
+	public String getStudName() {
+		return studName;
+	}
+	public void setStudName(String studName) {
+		this.studName = studName;
+	}
+	
+	
+	
+}
+
+
+

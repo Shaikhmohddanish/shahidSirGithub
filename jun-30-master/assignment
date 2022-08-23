@@ -1,0 +1,34 @@
+
+
+-> create angular project to consume all the endpoint created in player demo ..
+
+post : http:localhost:1234/players 
+
+	
+get : http:localhost:1234/players 
+
+	
+	//http://localhost:1234/players/team/ENG 
+
+
+
+	//http://localhost:1234/players/team/name/ENG/Virat
+
+
+    	//http://localhost:1234/players/matches/100
+
+    ////http://localhost:1234/players/matches/runs/100/10000
+
+
+        ////http://localhost:1234/players/matches/runs/and/100/10000
+
+
+
+    ////http://localhost:1234/players/runs/5000
+
+
+
+
+
+
+

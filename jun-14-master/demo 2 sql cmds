@@ -1,0 +1,108 @@
+select * from student;
+
+insert into student values(2,'raja',5,60,'JNU');
+
+insert into student values(4,'rajesh',5,80,'IIT');
+
+
+insert into student values(5,'ram',3,85,'IIT');
+
+insert into student values(6,'rohan',3,88,'IISC');
+
+
+select * form student;
+
+
+
+select * from student
+where rno=5;
+
+select * from student
+where name='raja';
+
+
+
+select * from student
+where sem=3;
+
+
+select * from student
+where marks>80;
+
+
+select * from student
+where marks>80 and college='IIT';
+
+
+
+
+select * from student
+where college='iit';
+
+
+select * from student
+where college='IIT';
+
+
+SELECT * from STUDent
+whERE college='IIT';
+
+
+SELECT * from STUDent
+whERE lower(college)= 'iit';
+
+
+select lower(college)
+from student;
+
+
+select college,name
+from student;
+
+
+
+select college as "college Name",name
+from student;
+
+
+
+select * from student
+where marks > 80 or college='IIT';
+
+
+
+select * from student
+where not marks > 80;
+
+
+select * from student
+where  college = 'IIT' or college='IISC' or college='JNU';
+
+
+select * from student
+where  college in('IIT','JNU','IISC');
+
+
+select * from student
+where  name like 'ra%';
+
+
+
+select * from student
+where  name like '%j%';
+
+
+select * from student
+where  name like '%a' or name like '%u';
+
+
+
+
+select * from student
+where college=null;
+
+
+
+
+select * from student
+where college is null;

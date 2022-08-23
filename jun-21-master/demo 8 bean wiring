@@ -1,0 +1,156 @@
+package demospr.wipro.demo.model;
+
+public class Student {
+
+	int rollNo;
+	
+	
+	String studName;
+	
+	Address address;
+	
+	
+	public Student(int rollNo, String studName, Address address) {
+		super();
+		this.rollNo = rollNo;
+		this.studName = studName;
+		this.address = address;
+	}
+
+
+
+	public Address getAddress() {
+		return address;
+	}
+
+
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+
+
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	
+public Student( String studName,int rollNo) {
+		
+		System.out.println("constructor injected hahaha confusion");
+		
+	}
+	
+	public Student(int rollNo, String studName) {
+		super();
+		System.out.println("constructor injected");
+		this.rollNo = rollNo;
+		this.studName = studName;
+	}
+	
+	@Override
+	public String toString() {
+		return "Student [rollNo=" + rollNo + ", studName=" + studName + ", address=" + address + "]";
+	}
+
+
+
+	public int getRollNo() {
+		return rollNo;
+	}
+	public void setRollNo(int rollNo) {
+	System.out.println("setter called");
+		this.rollNo = rollNo;
+	}
+	public String getStudName() {
+		return studName;
+	}
+	public void setStudName(String studName) {
+		this.studName = studName;
+	}
+	
+	
+	
+}
+
+
+
+
+
+----------------address
+
+
+package demospr.wipro.demo.model;
+
+public class Address {
+
+	String state;
+	String city;
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public Address() {
+		// TODO Auto-generated constructor stub
+	}
+	public Address(String state, String city) {
+		super();
+		this.state = state;
+		this.city = city;
+	}
+	@Override
+	public String toString() {
+		return "Address [state=" + state + ", city=" + city + "]";
+	}
+	
+	
+
+}
+
+
+---------------------xml 
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+>
+
+<bean class="demospr.wipro.demo.model.Student" id="student">
+<constructor-arg  index="1" type="String" value="Sachin">  </constructor-arg>
+<constructor-arg index="0" type="int" value="10">  </constructor-arg>
+<constructor-arg ref="address"> </constructor-arg>
+</bean>
+
+
+<bean class="demospr.wipro.demo.model.Address" id="address">
+<constructor-arg  value="karnataka">  </constructor-arg>
+<constructor-arg  value="Banaglore">  </constructor-arg>
+</bean>
+
+
+
+
+
+
+ <context:annotation-config/>  
+</beans>
+
+
+

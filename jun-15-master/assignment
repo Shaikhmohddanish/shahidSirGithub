@@ -1,0 +1,28 @@
+> create table Employee with the following attributes and constraints
+
+EmpFName
+EmpMName
+EmpLastName
+EmpAge -> must be a positive number and less than 50
+EmpCity -> should begin with letter B (Ex: Bangalore , Bijapur)
+EmpDesignation -> can be any manager (Ex sales manager, acc manager)
+EmpId -> primary key must have 5 chars (EX: emp01,emp02,emp03)
+empDOB -> must be a date(data type) column
+
+-> insert 5 employee details
+
+->update any employe and change city name
+
+-> delete an employee
+ 
+-> delete all employees
+
+->get back all the employees deleted in previous delete
+
+-> display employee  name and dob in(DD-MM-YYYY) fromat
+
+-> display employee  name in following format  
+       Fname   Mname    lname
+Ex:  Sachin  Ramesh  Tendulkar
+should be displayed as  S.R.Tendulkar  
+

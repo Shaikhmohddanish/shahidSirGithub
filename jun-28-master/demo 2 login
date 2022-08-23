@@ -1,0 +1,324 @@
+
+----------------model 
+
+package com.example.login.model;
+
+public class UserAuth {
+
+	String email;
+	String password;
+	@Override
+	public String toString() {
+		return "UserAuth [email=" + email + ", password=" + password + "]";
+	}
+	public UserAuth() {
+		// TODO Auto-generated constructor stub
+	}
+	public UserAuth(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	
+}
+
+
+--------dao 
+
+package com.example.login.dao;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import com.example.login.model.Users;
+
+@Repository
+public interface UsersDao extends CrudRepository<Users, String>{
+
+	
+	public Users findByEmailAndPassword(String email,String password);
+}
+
+---------service 
+
+package com.example.login.service;
+
+import org.springframework.stereotype.Service;
+
+import com.example.login.model.Users;
+
+@Service
+public interface UserService {
+
+	public Users saveUser(Users user);
+	
+	public Users login(String email,String password);
+}
+
+
+-----------------impl 
+
+package com.example.login.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.login.dao.UsersDao;
+import com.example.login.model.Users;
+
+@Service
+public class UserServiceImpl implements UserService{
+
+	@Autowired
+	UsersDao usersDao;
+	
+	@Override
+	public Users saveUser(Users user) {
+		
+		return usersDao.save(user);
+	}
+
+	public Users login(String email,String password)
+	{
+		Users user= usersDao.findByEmailAndPassword(email, password);
+		
+		if(user!=null)
+		return user;
+		
+		return null;
+	
+	}
+	
+}
+
+-----controller 
+
+package com.example.login.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.login.model.UserAuth;
+import com.example.login.model.Users;
+import com.example.login.service.UserService;
+
+@CrossOrigin
+@RestController
+@RequestMapping("users")
+public class UserController {
+
+	
+	@Autowired
+	UserService userService;
+	
+	@PostMapping
+	public ResponseEntity<Users> saveuser(@RequestBody Users user)
+	{
+	
+		Users savedUser= userService.saveUser(user);
+		return new ResponseEntity<Users>(savedUser,HttpStatus.OK);
+		
+	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<Users> saveuser(@RequestBody UserAuth userAuth)
+	{
+	
+		System.out.println(userAuth);
+		Users savedUser= userService.login(userAuth.getEmail(), userAuth.getPassword());
+		System.out.println(savedUser);
+		return new ResponseEntity<Users>(savedUser,HttpStatus.OK);
+		
+	}
+	
+	
+}
+
+
+-----------------------------angular  
+
+ng g c login 
+
+
+
+--service 
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { LoginAuth } from 'src/login.model';
+import { User } from 'src/user.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UsersService {
+
+  constructor(private http:HttpClient) { }
+
+
+
+ registerUser(user:User)
+ {
+
+  return this.http.post<User>('http://localhost:1234/users',user);
+ } 
+
+loginUser(loginUser:LoginAuth)
+ {
+ 
+  return this.http.post<User>('http://localhost:1234/users/login',loginUser);
+ } 
+
+}
+
+-------------login.ts 
+
+
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { LoginAuth } from 'src/login.model';
+import { User } from 'src/user.model';
+import { UsersService } from '../users.service';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+
+  constructor(private userService:UsersService) { }
+
+  ngOnInit(): void {
+  }
+
+
+  userLogin=new LoginAuth();
+
+  user=new User();
+
+  validateLogin(loginForm :NgForm)
+  {
+
+    if(loginForm.valid)
+    {
+
+this.userService.loginUser(this.userLogin).subscribe(
+
+    data=>{
+   this.user=data;
+
+   if(this.user==null)
+   alert('invalid email or password')
+   else
+   alert('valid user')
+    },
+    error=>{
+      console.log(error);
+    }
+
+)
+
+
+    }
+    else
+    {
+      alert('something went wrong')
+    }
+
+  }
+
+}
+
+
+------login.html 
+
+<p>login works!</p>
+
+<form #regForm="ngForm" (ngSubmit)="validateLogin(regForm)">  
+    <table> 
+<tr>  
+   <td> Email: </td>
+   <td>  
+<input type="text" name="email" [(ngModel)]="userLogin.email">
+</td>
+</tr>
+
+    <tr>  
+    <td> Password </td>
+    <td>  
+ <input type="password" name="password" [(ngModel)]="userLogin.password">
+ </td>
+ </tr>
+
+ <tr> 
+<td> </td>
+<td> 
+    <input type="submit" value="login"> 
+</td> 
+</tr>
+
+</table>
+</form>
+
+-app.comp.html 
+
+
+
+
+
+<app-login></app-login> 
+
+
+<app-reg> </app-reg>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

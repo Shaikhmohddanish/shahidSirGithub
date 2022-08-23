@@ -1,0 +1,21 @@
+
+
+open the cmd and type mongod 
+
+mongod is not recognized as internal or external cmd 
+
+-> open c drive program files mongodb bin  
+-> copy the path of bin and set it in enviranment variable 
+
+open the new  cmd and type mongod 
+
+error -> mongod looking for data /db folder in c dribve to save the data 
+
+go to c dive create a folder called data with data create a folder called db 
+
+-> open the cmd type mongod 
+
+-> open new cmd withoth close mongod cmd and type mongo 
+
+-> and write momgo cmds 
+

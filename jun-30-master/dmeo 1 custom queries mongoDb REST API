@@ -1,0 +1,353 @@
+--model 
+
+package com.example.mongocrud.model;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
+public class Player {
+	
+	@Id
+	int playerId;
+	String playerName;
+	String team;
+	String pic;
+
+	public int getWickets() {
+		return wickets;
+	}
+	public void setWickets(int wickets) {
+		this.wickets = wickets;
+	}
+	public int getRuns() {
+		return runs;
+	}
+	public void setRuns(int runs) {
+		this.runs = runs;
+	}
+	public int getMatches() {
+		return matches;
+	}
+	public void setMatches(int matches) {
+		this.matches = matches;
+	}
+	int wickets;
+	int runs;
+	int matches;
+	
+	
+	
+	public Player(int playerId, String playerName, String team, String pic) {
+		super();
+		this.playerId = playerId;
+		this.playerName = playerName;
+		this.team = team;
+		this.pic = pic;
+	}
+	public String getPic() {
+		return pic;
+	}
+	public void setPic(String pic) {
+		this.pic = pic;
+	}
+	public Player(int playerId, String playerName, String team) {
+		super();
+		this.playerId = playerId;
+		this.playerName = playerName;
+		this.team = team;
+	}
+public Player() {
+	// TODO Auto-generated constructor stub
+}
+public int getPlayerId() {
+	return playerId;
+}
+public void setPlayerId(int playerId) {
+	this.playerId = playerId;
+}
+public String getPlayerName() {
+	return playerName;
+}
+public void setPlayerName(String playerName) {
+	this.playerName = playerName;
+}
+public String getTeam() {
+	return team;
+}
+public void setTeam(String team) {
+	this.team = team;
+}
+@Override
+public String toString() {
+	return "Player [playerId=" + playerId + ", playerName=" + playerName + ", team=" + team + "]";
+}
+
+}
+
+
+--------------------dao 
+
+package com.example.mongocrud.dao;
+
+import java.util.List;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.example.mongocrud.model.Player;
+@Repository
+public interface PlayerDao extends MongoRepository<Player, Integer>{
+
+	//findById
+	//findAll
+	//save / update
+	//delete 
+	
+
+	public List<Player> findByTeam(String team);
+	public List<Player> findByTeamOrPlayerName(String team,String playerName);
+	
+	// get players who played 150 matches
+	//@Query("{'matches':150}") 
+	// get players who played > 150 matches
+	//@Query("{'matches':{$gt:150}}")
+	
+		// get players who played > NO_OF_MATCHES_GIVEN_BY_USER 
+	@Query("{'matches':{$gt:?0}}")
+	public List<Player> getPlayerByMatchesPlayed(int matches);
+	
+	//get players playerd more than NO_OF_MATCHES_GIVEN_BY_USER or more than  NO_OF_RUN_GIVEN_BY_USER
+	
+	//@Query("{$or:[{'matches':{$gt:150}},{'runs':{$gt:10000}}]}")
+	@Query("{$or:[{'matches':{$gt:?0}},{'runs':{$gt:?1}}]}")
+	public List<Player> getPlayerByMatchesPlayedOrRunsScored(int matches,int runs);
+	
+	
+	@Query("{'matches':{$gt:?0},'runs':{$gt:?1}}")
+	public List<Player> getPlayerByMatchesPlayedAndRunsScored(int matches,int runs);
+	
+
+
+	public List<Player> findByRunsGreaterThan(int runs);
+	
+}
+
+
+------------------service 
+
+
+package com.example.mongocrud.service;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.example.mongocrud.model.Player;
+
+@Service
+public interface PlayerService {
+
+	public Player savePlayer(Player player);
+	
+	public List<Player> getPlayers();
+	
+	public List<Player> findByTeam(String team);
+	
+	public List<Player> findByTeamOrName(String team,String playerName);
+	
+	public List<Player> getPlayerByMatchesPlayed(int matches);
+
+	public List<Player> getPlayerByMatchesPlayedOrRunsScored(int matches,int runs);
+
+	public List<Player> getPlayerByMatchesPlayedAndRunsScored(int matches,int runs);
+	
+	public List<Player> findByRunsGreaterThan(int runs);
+}
+
+
+
+
+-----------------impl 
+
+
+package com.example.mongocrud.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.mongocrud.dao.PlayerDao;
+import com.example.mongocrud.model.Player;
+
+@Service
+public class PlayerServiceImpl implements PlayerService{
+
+	@Autowired
+	PlayerDao playerDao;
+	
+	
+	public Player savePlayer(Player player)
+	{
+		return playerDao.save(player);
+	}
+
+	public List<Player> getPlayers()
+	{		
+		return playerDao.findAll();
+	}
+	
+	public List<Player> findByTeam(String team)
+	{
+		return playerDao.findByTeam(team);
+	}
+
+	public List<Player> findByTeamOrName(String team,String playerName)
+	{
+		return playerDao.findByTeamOrPlayerName(team, playerName);
+		
+	}
+	
+	
+	public List<Player> getPlayerByMatchesPlayed(int matches)
+	{
+		return playerDao.getPlayerByMatchesPlayed(matches);
+	}
+	
+	
+	public List<Player> getPlayerByMatchesPlayedOrRunsScored(int matches,int runs)
+	{
+		return playerDao.getPlayerByMatchesPlayedOrRunsScored(matches, runs);
+		
+	}
+	
+	public List<Player> getPlayerByMatchesPlayedAndRunsScored(int matches,int runs)
+	{
+		return playerDao.getPlayerByMatchesPlayedAndRunsScored(matches, runs);
+	}
+	
+	
+	public List<Player> findByRunsGreaterThan(int runs)
+	{
+		
+		return playerDao.findByRunsGreaterThan(runs);
+	}
+}
+
+
+
+
+-----------------------------controller
+
+
+
+package com.example.mongocrud.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.mongocrud.model.Player;
+import com.example.mongocrud.service.PlayerService;
+
+@RestController
+@RequestMapping("players")
+public class PlayerController {
+
+	
+	@Autowired
+	PlayerService playerService;
+	
+	
+	@PostMapping
+	public ResponseEntity<Player> savePlayer(@RequestBody Player player)
+	{
+	Player savedPlayer= playerService.savePlayer(player);	
+		
+		return new ResponseEntity<Player>(savedPlayer,HttpStatus.OK);
+		
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<Player>> getPlayers()
+	{
+	List<Player> players= playerService.getPlayers();	
+		
+		return new ResponseEntity<List<Player>>(players,HttpStatus.OK);
+	}
+
+	//http://localhost:1234/players/team/ENG 
+	@GetMapping("team/{team}")
+	public ResponseEntity<List<Player>> getPlayersByTeam(@PathVariable String team)
+	{
+	List<Player> players= playerService.findByTeam(team);
+		return new ResponseEntity<List<Player>>(players,HttpStatus.OK);
+	}
+	
+	//http://localhost:1234/players/team/name/ENG/Virat
+	@GetMapping("team/name/{team}/{name}")
+	public ResponseEntity<List<Player>> getPlayersByTeamOrName(@PathVariable String team,@PathVariable String name)
+	{
+	List<Player> players= playerService.findByTeamOrName(team, name);
+		return new ResponseEntity<List<Player>>(players,HttpStatus.OK);
+	}
+	
+	//http://localhost:1234/players/matches/100
+	@GetMapping("matches/{matches}")
+	public ResponseEntity<List<Player>> getPlayersByMatchesGt(@PathVariable int matches)
+	{
+	List<Player> players= playerService.getPlayerByMatchesPlayed(matches);
+		return new ResponseEntity<List<Player>>(players,HttpStatus.OK);
+	}
+	
+
+
+    ////http://localhost:1234/players/matches/runs/100/10000
+	@GetMapping("matches/runs/{matches}/{runs}")
+	public ResponseEntity<List<Player>> getPlayersByMatchesOrRuns(@PathVariable int matches,@PathVariable int runs)
+	{
+	List<Player> players= playerService.getPlayerByMatchesPlayedOrRunsScored(matches, runs);
+		return new ResponseEntity<List<Player>>(players,HttpStatus.OK);
+	}
+	
+	
+    ////http://localhost:1234/players/matches/runs/and/100/10000
+	@GetMapping("matches/runs/and/{matches}/{runs}")
+	public ResponseEntity<List<Player>> getPlayersByMatchesAndRuns(@PathVariable int matches,@PathVariable int runs)
+	{
+	List<Player> players= playerService.getPlayerByMatchesPlayedAndRunsScored(matches, runs);
+		return new ResponseEntity<List<Player>>(players,HttpStatus.OK);
+	}
+	
+	
+    ////http://localhost:1234/players/runs/5000
+	@GetMapping("runs/{runs}")
+	public ResponseEntity<List<Player>> getPlayersByRunsGt(@PathVariable int runs)
+	{
+	List<Player> players= playerService.findByRunsGreaterThan(runs);
+		return new ResponseEntity<List<Player>>(players,HttpStatus.OK);
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+

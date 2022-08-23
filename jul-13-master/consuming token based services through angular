@@ -1,0 +1,402 @@
+
+------------model reg
+
+export class User{
+
+    userName: '';
+    email='';
+password='';
+
+cpassword='';
+contact=0;
+securityQuestion='';
+securityAnswer='';
+	
+
+profilePic='';
+
+
+}
+
+---------------login model 
+
+
+export class LoginAuth
+{
+
+    userName='';
+    password='';
+}
+
+-------------------------service 
+
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { LoginAuth } from 'src/login.model';
+import { User } from 'src/user.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UsersService {
+
+  constructor(private http:HttpClient) { }
+
+
+
+ registerUser(user:User)
+ {
+
+  return this.http.post<User>('http://localhost:3333/user/na/signup',user);
+ } 
+
+loginUser(loginUser:LoginAuth)
+ {
+ 
+  return this.http.post<User>('http://localhost:3333/user/na/login',loginUser,{responseType: 'test' as 'json'});
+ } 
+
+
+ getMenu(token:string)
+ {
+ 
+let myToken='Bearer '+token;
+
+let headers=new HttpHeaders().set('Authorization',myToken);
+  return this.http.get<string>('http://localhost:3333/menuservice/info',{headers , responseType: 'test' as 'json'});
+ }
+
+
+
+}
+
+
+------------------app-routing
+
+
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { MenuComponent } from './menu/menu.component';
+
+const routes: Routes = [
+  {path:'menu',component:MenuComponent}
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+
+------------app.comp.html 
+
+
+
+<router-outlet> </router-outlet> 
+
+
+<app-login></app-login> 
+
+
+<app-reg> </app-reg>
+
+
+-----------------------------------login.html 
+
+<p>login works!</p>
+
+<form #regForm="ngForm" (ngSubmit)="validateLogin(regForm)">  
+    <table> 
+<tr>  
+   <td> Email: </td>
+   <td>  
+<input type="text" name="email" [(ngModel)]="userLogin.userName">
+</td>
+</tr>
+
+    <tr>  
+    <td> Password </td>
+    <td>  
+ <input type="password" name="password" [(ngModel)]="userLogin.password">
+ </td>
+ </tr>
+
+ <tr> 
+<td> </td>
+<td> 
+    <input type="submit" value="login"> 
+</td> 
+</tr>
+
+</table>
+</form>
+
+-----------------------login.ts 
+
+
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { LoginAuth } from 'src/login.model';
+import { User } from 'src/user.model';
+import { UsersService } from '../users.service';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+
+  constructor(private userService:UsersService,private router:Router) { }
+
+  ngOnInit(): void {
+  }
+
+
+  userLogin=new LoginAuth();
+
+  user=new User();
+
+  validateLogin(loginForm :NgForm)
+  {
+
+    if(loginForm.valid)
+    {
+
+this.userService.loginUser(this.userLogin).subscribe(
+
+    data=>{
+   this.user=data;
+
+   if(this.user==null)
+   alert('invalid email or password')
+   else
+   alert('valid user');
+   console.log(data)
+    localStorage.setItem('token',data+'');  
+   this.router.navigate(['menu'])
+    },
+    error=>{
+      console.log(error);
+    }
+
+)
+
+
+    }
+    else
+    {
+      alert('something went wrong')
+    }
+
+  }
+
+}
+
+
+--------------------reg.html 
+
+<p>reg works! new</p>
+
+
+<form #regForm="ngForm" (ngSubmit)="addUser(regForm)">  
+    <table> 
+<tr>  
+   <td> Email: </td>
+   <td>  
+<input type="text" name="email" [(ngModel)]="user.email">
+</td>
+</tr>
+
+<tr>  
+   <td> userName: </td>
+   <td>  
+<input type="text" name="userName" [(ngModel)]="user.userName">
+</td>
+</tr>
+
+
+    <tr>  
+    <td> Password </td>
+    <td>  
+ <input type="password" name="password" [(ngModel)]="user.password">
+ </td>
+ </tr>
+ 
+ <tr>  
+    <td> Confirm Password: </td>
+    <td>  
+ <input type="password" name="cpassword" [(ngModel)]="user.cpassword">
+ </td>
+ </tr>
+ 
+
+ <tr>  
+    <td> Contact: </td>
+    <td>  
+ <input type="number" name="contact" [(ngModel)]="user.contact">
+ </td>
+ </tr>
+
+ <tr>  
+    <td> Security Question : </td>
+    <td>  
+     <select name="secQuestion" [(ngModel)]="user.securityQuestion"> 
+<option> name of first school</option>
+<option> fvrt food</option>
+<option> fvrt sport</option>
+     </select>
+    
+</td>
+ </tr>
+
+ <tr>  
+    <td> Secutity Answer: </td>
+    <td>  
+ <input type="text" name="secAnswer" [(ngModel)]="user.securityAnswer">
+ </td>
+ </tr>
+
+ <tr>  
+    <td> Profile Pic: </td>
+    <td>  
+ <input type="file" name="profilePic" (change)="onFileUpload($event)">
+ </td>
+ </tr>
+
+
+ <tr>  
+    <td>  </td>
+    <td>  
+ <input type="submit" value="register me">
+ </td>
+ </tr>
+
+
+</table>
+</form>
+
+
+------------reg.ts 
+
+
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { User } from 'src/user.model';
+import { UsersService } from '../users.service';
+
+@Component({
+  selector: 'app-reg',
+  templateUrl: './reg.component.html',
+  styleUrls: ['./reg.component.css']
+})
+export class RegComponent implements OnInit {
+
+  constructor(private userService:UsersService) { }
+
+  ngOnInit(): void {
+  }
+
+user=new User();
+  addUser(regForm:NgForm)
+  { 
+
+    if(regForm.valid)
+    {
+
+      this.user.profilePic=this.pic;
+    this.userService.registerUser(this.user).subscribe(
+      data=>{
+        alert('user registered') 
+      },
+      error=>{
+        console.log(error)
+      }
+    )
+    }    
+    else
+    {
+      alert ('somthing is wrong')
+    }
+
+    
+
+  }
+
+pic='';
+  onFileUpload(fileInput:any)
+  {
+  
+   let rdr= new FileReader();
+  
+   rdr.onload = (e:any)=>{
+  let img=new Image();
+  img.src=e.target.result;
+  
+  img.onload = rs=>{
+    this.pic=e.target.result;
+  }
+   }
+  
+   rdr.readAsDataURL(fileInput.target.files[0]);
+  
+  
+  }
+  
+}
+
+
+------------menu.html 
+<p>menu works!</p>
+
+
+{{msg}}
+
+------------menu.ts 
+
+import { Component, OnInit } from '@angular/core';
+import { UsersService } from '../users.service';
+
+@Component({
+  selector: 'app-menu',
+  templateUrl: './menu.component.html',
+  styleUrls: ['./menu.component.css']
+})
+export class MenuComponent implements OnInit {
+
+  constructor(private userService:UsersService) { }
+
+  ngOnInit(): void {
+    console.log('menu comp')
+  this.token=localStorage.getItem('token');
+this.getMenuService();  
+}
+
+  token:any=''
+msg=''
+  getMenuService()
+  {
+
+    this.userService.getMenu(this.token).subscribe(
+      data=>{
+        this.msg=data;
+      },
+error=>{
+      console.log(error);
+}
+
+    )
+
+
+  }
+
+
+}
+
+
+
+
+
+

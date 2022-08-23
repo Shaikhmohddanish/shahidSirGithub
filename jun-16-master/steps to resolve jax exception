@@ -1,0 +1,37 @@
+jdk download and install 
+
+-> change the default jre to jdk 8
+
+-> right click prop -> java build path 
+-> select jre lib 17/11 click remove
+
+->select class path 
+-> add library 
+-> jre system lib
+->installed jre
+-> directory 
+-> choose the jdk1.8 from java in program files
+
+->uncheck the previous jre check the jdk ..
+
+
+
+//---------------------------- search for sqlnet.ora in oracle folder in c drive
+
+edit it 
+add the following lines 
+
+
+SQLNET.ALLOWED_LOGON_VERSION=10
+SQLNET.ALLOWED_LOGON_VERSION_CLIENT=10
+SQLNET.ALLOWED_LOGON_VERSION_SERVER=10
+
+NOTE-> remove NTS and add NONE  authentication type
+
+//------------- 
+
+java build path remove ojdbc6.jar and add 
+ojdbc8.jar 
+
+
+// search for ojdbc8.jar in ur oracle folder

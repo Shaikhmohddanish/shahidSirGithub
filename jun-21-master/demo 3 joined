@@ -1,0 +1,145 @@
+package com.myapp.restaurant.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Vehicle {
+
+	@Id
+	int regNo;
+	String colour;
+	String model;
+	
+	public Vehicle() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public int getRegNo() {
+		return regNo;
+	}
+
+	public void setRegNo(int regNo) {
+		this.regNo = regNo;
+	}
+
+	public String getColour() {
+		return colour;
+	}
+
+	public void setColour(String colour) {
+		this.colour = colour;
+	}
+
+	public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	@Override
+	public String toString() {
+		return "Vehicle [regNo=" + regNo + ", colour=" + colour + ", model=" + model + "]";
+	}
+
+	public Vehicle(int regNo, String colour, String model) {
+		super();
+		this.regNo = regNo;
+		this.colour = colour;
+		this.model = model;
+	}
+	
+	
+}
+
+
+
+--------------tractor 
+
+
+package com.myapp.restaurant.service;
+
+import com.myapp.restaurant.dao.TractorDao;
+import com.myapp.restaurant.model.Tractor;
+
+public class TractorService {
+
+	public static void main(String[] args) {
+
+		Tractor tractor=new Tractor("large");
+		
+		tractor.setRegNo(5);
+		TractorDao dao=new TractorDao();
+		dao.saveTractor(tractor);
+		
+		
+	}
+
+}
+
+
+-----------------car 
+
+package com.myapp.restaurant.service;
+
+import com.myapp.restaurant.dao.CarDao;
+import com.myapp.restaurant.model.Car;
+
+public class CarService {
+
+	public static void main(String[] args) {
+
+		Car car=new Car(50000,2022);
+		car.setRegNo(54);
+		car.setModel("x1");
+		car.setColour("blue");
+		
+		
+		CarDao dao=new CarDao();
+		dao.saveCar(car);
+		
+		
+	}
+
+}
+
+
+---xml 
+
+
+ <hibernate-configuration>
+    <session-factory>
+    <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
+    <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:XE</property>
+    <property name="connection.username">wipro63</property>
+    <property name="connection.password">pass</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
+    <property name="show_sql">true</property>
+    <property name="hibernate.connection.pool_size">1</property>
+    <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+    
+   
+    <property name="hbm2ddl.auto">update</property>
+       
+       <!-- create always creates a new table  -->
+       <!-- update  creates a new table if it doesnt exist else insert it in the existing table  -->
+       
+       
+        <mapping class="com.myapp.restaurant.model.Restaurant"></mapping>
+  
+        <mapping class="com.myapp.restaurant.model.Vehicle"></mapping>
+        <mapping class="com.myapp.restaurant.model.Car"></mapping>
+        <mapping class="com.myapp.restaurant.model.Tractor"></mapping>
+  
+      
+    </session-factory> 
+</hibernate-configuration>
+
+
+
+

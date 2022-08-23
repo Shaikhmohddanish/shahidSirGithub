@@ -1,0 +1,176 @@
+package com.myapp.restaurant.dao;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
+
+import com.myapp.restaurant.model.Restaurant;
+
+public class RestaurantDao {
+
+	
+	public Restaurant saveRestaurant(Restaurant  restaurant)
+	{
+		SessionFactory factory=new Configuration().configure().buildSessionFactory();
+		Session session= factory.openSession();
+		Transaction tx= session.beginTransaction();
+		session.save(restaurant);
+		tx.commit();
+		return restaurant;
+	}
+	
+	public Restaurant getRestaurantById(int restId)
+	{
+		SessionFactory factory=new Configuration().configure().buildSessionFactory();
+		Session session= factory.openSession();
+		Transaction tx= session.beginTransaction();
+		Restaurant restaurant= session.get(Restaurant.class,restId);
+		tx.commit();
+		if(restaurant!=null)
+		return restaurant;
+		else
+			return null;
+	}
+
+	
+	
+	public List<Restaurant> getRestaurants()
+	{
+		SessionFactory factory=new Configuration().configure().buildSessionFactory();
+		Session session= factory.openSession();
+		Transaction tx= session.beginTransaction();
+		
+	List<Restaurant> restaurants=	session.createQuery("from Restaurant").list();
+		tx.commit();
+		
+		if(restaurants.size()==0 )
+			return null;
+		else
+			return 
+					restaurants;
+	}
+	
+	
+	public List<Restaurant> getRestaurants(boolean isOpen)
+	{
+		SessionFactory factory=new Configuration().configure().buildSessionFactory();
+		Session session= factory.openSession();
+		Transaction tx= session.beginTransaction();
+		
+	//List<Restaurant> restaurants=	session.createQuery("from Restaurant r where r.isOpen=:isOpen").setParameter("isOpen",isOpen) .list();
+		
+		Query query= session.createQuery("from Restaurant r where r.isOpen=:isOpen");
+		query.setParameter("isOpen",isOpen);
+		List<Restaurant> restaurants =query.list();
+		
+		
+		
+		tx.commit();
+		
+		if(restaurants.size()==0 )
+			return null;
+		else
+			return 
+					restaurants;
+	}
+
+
+
+	public List<Restaurant> getRestaurants(int restId)
+	{
+		SessionFactory factory=new Configuration().configure().buildSessionFactory();
+		Session session= factory.openSession();
+		Transaction tx= session.beginTransaction();
+		
+		Criteria criteria=session.createCriteria(Restaurant.class);
+	criteria.add(Restrictions.gt("restId", restId));	
+	List<Restaurant> restaurants =criteria.list();
+		
+		
+		
+		tx.commit();
+		
+		if(restaurants.size()==0 )
+			return null;
+		else
+			return 
+					restaurants;
+	}
+
+
+	public List<Restaurant> getRestaurantsGTE(int restId)
+	{
+		SessionFactory factory=new Configuration().configure().buildSessionFactory();
+		Session session= factory.openSession();
+		Transaction tx= session.beginTransaction();
+		
+		Criteria criteria=session.createCriteria(Restaurant.class);
+	criteria.add(Restrictions.ge("restId", restId));	
+	List<Restaurant> restaurants =criteria.list();
+		
+		
+		
+		tx.commit();
+		
+		if(restaurants.size()==0 )
+			return null;
+		else
+			return 
+					restaurants;
+	}
+
+	
+	
+
+}
+
+
+
+--------------------------service 
+
+
+package com.myapp.restaurant.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.myapp.restaurant.dao.RestaurantDao;
+import com.myapp.restaurant.model.Address;
+import com.myapp.restaurant.model.Restaurant;
+
+public class RestaurantService {
+
+	public static void main(String[] args) {
+
+		RestaurantDao dao=new RestaurantDao();
+		
+//		List<Restaurant> rests= dao.getRestaurants(3);
+//		rests.forEach( x->{System.out.println(x);} );
+		
+
+		List<Restaurant> rests= dao.getRestaurantsGTE(3);
+		rests.forEach( x->{System.out.println(x);} );
+
+	
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,168 @@
+
+-> download a spring boot project without any dependency 
+
+
+--> copy paste the pom .xml 
+
+------------------------------pom.xml
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.3.RELEASE</version>
+        <relativePath/>
+    </parent>
+	<groupId>com.example</groupId>
+	<artifactId>wipro63-apigateway</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>wipro63-apigateway</name>
+	<description>Demo project for Spring Boot</description>
+		<properties>
+		<java.version>1.8</java.version>
+		<spring-cloud.version>2020.0.3</spring-cloud.version>
+	</properties>
+	
+<dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zuul</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.marcosbarbero.cloud</groupId>
+            <artifactId>spring-cloud-zuul-ratelimit</artifactId>
+            <version>1.7.2.RELEASE</version>
+        </dependency>
+    </dependencies>
+
+<dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>Dalston.SR1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+
+
+---------------------------main  class api gateway 
+
+package com.example.apigateway;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
+
+@EnableZuulProxy
+@EnableDiscoveryClient
+@SpringBootApplication
+public class Wipro63ApigatewayApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(Wipro63ApigatewayApplication.class, args);
+	}
+
+}
+
+
+--------app.prop 
+
+
+
+server.port=3333
+spring.application.name=apigateway
+
+zuul.routes.menu.path=/menuservice/**
+zuul.routes.menu.url=http://localhost:1111
+zuul.routes.menu.strip-prefix=false
+
+
+zuul.routes.food.path=/foodservice/**
+zuul.routes.food.url=http://localhost:1234
+zuul.routes.food.strip-prefix=false
+
+
+--------------------------------------stop all the services 
+
+-> start eureka server 
+
+-> start apigateway 
+
+-> start food on port 1234
+
+-> start menu 
+
+
+--------confirm all the service are registerd on eureka 
+
+
+ACCESS BOTH MENU AND FOOD SERVICE VIA THE GATEWAY ADDRESS
+
+http://localhost:3333/menuservice/info
+
+
+http://localhost:3333/foodservice/info
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

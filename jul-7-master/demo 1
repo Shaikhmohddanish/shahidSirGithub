@@ -1,0 +1,37 @@
+
+server.port=3333
+spring.application.name=apigateway
+
+zuul.routes.menu.path=/menuservice/**
+zuul.routes.menu.url=http://localhost:1111
+zuul.routes.menu.strip-prefix=false
+
+
+zuul.routes.food.path=/foodservice/**
+#zuul.routes.food.url=http://localhost:1234
+zuul.routes.food.service-id=food
+zuul.routes.food.strip-prefix=false
+
+
+------------------------------
+-- start eureka server
+-> start menu service 
+-> start apigateway
+--> start food service on 3 different ports (3 instance of food service should be running)
+
+
+----------
+
+url 
+
+menu service through gateway 
+
+http://localhost:3333/menuservice/info
+
+
+food service through gateway 
+
+http://localhost:3333/foodservice/info
+
+
+notice both of them does load balancing 

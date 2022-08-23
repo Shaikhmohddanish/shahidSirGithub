@@ -1,0 +1,50 @@
+-> create a restaurant model with following properties 
+
+-> name 
+->isopen
+->city
+->area
+->type veg/non-veg 
+->regdate  date type of datattype 
+->id
+->rating
+
+
+-------------------------save 10 different restaurant objects using hibernate
+
+-------------------------get all restaurants 
+
+-------------------------get all  restaurant  in given city (case insensitive)
+
+
+
+-------------------------get all opened restaurant  in given city (case insensitive)
+
+-------------------------get all restaurants whose rating is more than 4 
+
+
+-------------------------update , delete restaulrant 
+
+------------------ get all restaurant started after the provide date 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

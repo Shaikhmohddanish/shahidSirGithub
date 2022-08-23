@@ -1,0 +1,129 @@
+package com.myapp.restaurant.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Type;
+
+@Entity
+public class Restaurant {
+
+	@Id
+	private int restId;
+	private String restName;
+	private String address;
+	private String city;
+	
+	@Column(name="user_id")
+	private int uid;
+
+	@Type(type="yes_no")
+	private boolean isOpen;
+	
+
+	@Transient
+	private int calcTemp;
+	
+	
+	public int getCalcTemp() {
+		return calcTemp;
+	}
+	public void setCalcTemp(int calcTemp) {
+		this.calcTemp = calcTemp;
+	}
+	public boolean isOpen() {
+		return isOpen;
+	}
+	public void setOpen(boolean isOpen) {
+		this.isOpen = isOpen;
+	}
+
+	
+	
+	public int getUid() {
+		return uid;
+	}
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public int getRestId() {
+		return restId;
+	}
+	public void setRestId(int restId) {
+		this.restId = restId;
+	}
+	public String getRestName() {
+		return restName;
+	}
+	public void setRestName(String restName) {
+		this.restName = restName;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	public Restaurant() {
+		// TODO Auto-generated constructor stub
+	}
+	public Restaurant(int restId, String restName, String address) {
+		super();
+		this.restId = restId;
+		this.restName = restName;
+		this.address = address;
+	}
+	@Override
+	public String toString() {
+		return "Restaurant [restId=" + restId + ", restName=" + restName + ", address=" + address + "]";
+	}
+	
+	
+	
+}
+
+
+------------service 
+
+
+package com.myapp.restaurant.service;
+
+import java.util.List;
+
+import com.myapp.restaurant.dao.RestaurantDao;
+import com.myapp.restaurant.model.Restaurant;
+
+public class RestaurantService {
+
+	public static void main(String[] args) {
+		
+	Restaurant restaurant=new Restaurant(4, "banaglore restaurant", "R t Nagar Bangalore");
+	restaurant.setCity("Bangalore");
+	restaurant.setUid(50);
+	restaurant.setOpen(true);
+	restaurant.setCalcTemp(500);
+	
+	RestaurantDao  dao=new RestaurantDao();
+	dao.saveRestaurant(restaurant);
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+

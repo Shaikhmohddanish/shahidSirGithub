@@ -1,0 +1,126 @@
+
+-->download the spring.xml file attahced in git and save it in project ..
+--->  create new maven project 
+--> arcehtype 
+org.apache.maven.quickstart 
+
+
+--------> https://mvnrepository.com/
+
+spring core , spring context 
+
+down the above dependencies from mvnrepo 
+
+
+-----------------downlaoded 
+
+
+  <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-context</artifactId>
+    <version>5.3.20</version>
+</dependency>
+  
+  <!-- https://mvnrepository.com/artifact/org.springframework/spring-core -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-core</artifactId>
+    <version>5.3.20</version>
+</dependency>
+  
+
+
+-----------add the above dependencies under dependencies tag in pom.xml 
+
+
+
+
+----------------------------------
+
+package demospr.wipro.demo.model;
+
+public class Student {
+
+	int rollNo;
+	
+	String studName;
+	public Student() {
+		// TODO Auto-generated constructor stub
+	}
+	public Student(int rollNo, String studName) {
+		super();
+		this.rollNo = rollNo;
+		this.studName = studName;
+	}
+	@Override
+	public String toString() {
+		return "Student [rollNo=" + rollNo + ", studName=" + studName + "]";
+	}
+	public int getRollNo() {
+		return rollNo;
+	}
+	public void setRollNo(int rollNo) {
+		this.rollNo = rollNo;
+	}
+	public String getStudName() {
+		return studName;
+	}
+	public void setStudName(String studName) {
+		this.studName = studName;
+	}
+	
+	
+	
+}
+
+
+
+--------------------------service 
+
+
+
+package demospr.wipro.demo.service;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.FileSystemResource;
+
+import demospr.wipro.demo.model.Student;
+
+public class StudentService {
+
+	public static void main(String[] args) {
+
+		/*
+		 * Student student=new Student(); 
+		 * student.setRollNo(5);
+		 * student.setStudName("Rohit");
+		 * 
+		 * System.out.println(student);
+		 * 
+		 * 
+		 * Student student2=new Student(6, "Rohit"); System.out.println(student2);
+		 */		
+		
+		
+		
+BeanFactory beanFactory=new XmlBeanFactory(new FileSystemResource("spring.xml"));		
+	Student student=(Student)beanFactory.getBean("student");
+
+	System.out.println(student);
+	
+//lazy loading -> object are loaded in memory only when they are required
+	
+	}
+}
+
+
+
+
+
+
+
+
+
+

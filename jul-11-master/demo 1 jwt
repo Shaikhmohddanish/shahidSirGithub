@@ -1,0 +1,91 @@
+add cross origin in both food and menu service controller 
+
+-------------
+
+download and import the jwt project given in the drive 
+
+---> start eureka server
+--> apigateway wioth jwt (project from drive which is imported in setp 1)
+-> start food service
+-> start menu service 
+
+check all three are registered on eureka or not 
+
+
+-----------------urls 
+
+menu service direct access 
+
+http://localhost:1111/menuservice/info
+
+
+
+menu service access via gateway
+
+http://localhost:3333/menuservice/info
+
+willl give u error 403 
+
+
+---------------------sign up  register a new user 
+
+
+post 
+
+http://localhost:3333/user/na/signup
+
+
+{
+    "userName": "prachi",
+    "email": "abc@gmail.com",
+    "password": "pass",
+    "securityQuestion": "name of first school",
+    "securityAnswer": "little star",
+    "address": "R T Nagar Bangalore",
+    "contact": 9988776655,
+    "dob": "2022-06-23T00:00:00.000+00:00",
+    "gender": "female"
+}
+
+--------------login 
+post 
+
+http://localhost:3333/user/na/login
+
+
+{
+"userName": "prachi",
+    "password": "pass"
+}
+
+
+send and copy the token return by login 
+
+
+----------------------------------
+
+to access menu via gateway now 
+
+http://localhost:3333/menuservice/info
+
+headers 
+
+key - > Authorization 
+value -> Bearer COPIED_TOKEN_FROM_LOGIN_PAGE 
+
+
+send 
+
+and you see menu service now accessed via gateway by providing token 
+
+
+
+
+
+
+
+
+
+
+
+

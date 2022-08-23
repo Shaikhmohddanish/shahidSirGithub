@@ -1,0 +1,94 @@
+download a springboot project with web dependency 
+
+
+--add the following in pom.xml depenencies 
+
+
+
+<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-cache -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-cache</artifactId>
+    <version>2.7.0</version>
+</dependency>
+
+
+
+-----------------main 
+
+package com.example.cachememory;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
+
+@EnableCaching
+@SpringBootApplication
+public class Wipro63cachememoryApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(Wipro63cachememoryApplication.class, args);
+	}
+
+}
+
+---------------controller 
+
+package com.example.cachememory;
+
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RequestMapping("democache")
+@RestController
+public class MyCacheController {
+
+
+	@Cacheable("mydata")
+	@GetMapping 
+	public ResponseEntity<String> getData()
+	{
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<String>("hello from cache controller",HttpStatus.OK);
+	}
+	
+}
+
+
+------------------------app.prop 
+
+
+server.port=1234
+
+
+
+url 
+
+http://localhost:1234/democache
+
+get method 
+
+
+hit the url multiple time without using  	@Cacheable("mydata") 
+
+now add 
+	@Cacheable("mydata") 
+
+hit the url multiple times 
+and see the difference 
+
+
+
+
+
+

@@ -1,0 +1,28 @@
+
+
+bookmodel 
+
+->isbn
+title
+authorname
+rating 
+
+
+-----------------
+
+-> search books having rating above 4
+
+-> title or isbn 
+
+-> author name or title 
+
+
+
+---------------ensure its done with response entities and oracle database 
+
+
+
+
+
+
+

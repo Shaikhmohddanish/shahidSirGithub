@@ -1,0 +1,473 @@
+
+
+--------------spring 
+
+----app.prop 
+
+server.port=1234
+
+
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
+spring.datasource.username=wipro63
+spring.datasource.password=pass
+spring.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
+
+#spring.jpa.hibernate.ddl-auto=create
+
+spring.jpa.hibernate.ddl-auto=validate
+
+spring.jpa.database-platform=org.hibernate.dialect.OracleDialect
+
+
+------------------ model 
+
+package com.example.login.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Transient;
+
+@Entity
+public class Users {
+
+	@Id
+	String email;
+	String password;
+	@Transient
+	String cpassword;
+	long contact;
+	String securityQuestion;
+	String securityAnswer;
+	
+	@Lob
+	String profilePic;
+
+ public Users() {
+	// TODO Auto-generated constructor stub
+}
+
+public Users(String email, String password, String cpassword, long contact, String securityQuestion,
+		String securityAnswer, String profilePic) {
+	super();
+	this.email = email;
+	this.password = password;
+	this.cpassword = cpassword;
+	this.contact = contact;
+	this.securityQuestion = securityQuestion;
+	this.securityAnswer = securityAnswer;
+	this.profilePic = profilePic;
+}
+
+public String getEmail() {
+	return email;
+}
+
+public void setEmail(String email) {
+	this.email = email;
+}
+
+public String getPassword() {
+	return password;
+}
+
+public void setPassword(String password) {
+	this.password = password;
+}
+
+public String getCpassword() {
+	return cpassword;
+}
+
+public void setCpassword(String cpassword) {
+	this.cpassword = cpassword;
+}
+
+public long getContact() {
+	return contact;
+}
+
+public void setContact(long contact) {
+	this.contact = contact;
+}
+
+public String getSecurityQuestion() {
+	return securityQuestion;
+}
+
+public void setSecurityQuestion(String securityQuestion) {
+	this.securityQuestion = securityQuestion;
+}
+
+public String getSecurityAnswer() {
+	return securityAnswer;
+}
+
+public void setSecurityAnswer(String securityAnswer) {
+	this.securityAnswer = securityAnswer;
+}
+
+public String getProfilePic() {
+	return profilePic;
+}
+
+public void setProfilePic(String profilePic) {
+	this.profilePic = profilePic;
+}
+
+@Override
+public String toString() {
+	return "Users [email=" + email + ", password=" + password + ", cpassword=" + cpassword + ", contact=" + contact
+			+ ", securityQuestion=" + securityQuestion + ", securityAnswer=" + securityAnswer + ", profilePic="
+			+ profilePic + "]";
+}
+
+ 
+ 
+
+
+}
+//ctrl + space
+
+-----------dao 
+
+package com.example.login.dao;
+
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import com.example.login.model.Users;
+
+@Repository
+public interface UsersDao extends CrudRepository<Users, String>{
+
+}
+
+-----------------------service 
+
+package com.example.login.service;
+
+import org.springframework.stereotype.Service;
+
+import com.example.login.model.Users;
+
+@Service
+public interface UserService {
+
+	public Users saveUser(Users user);
+	
+}
+
+
+-----------impl 
+
+
+package com.example.login.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.login.dao.UsersDao;
+import com.example.login.model.Users;
+
+@Service
+public class UserServiceImpl implements UserService{
+
+	@Autowired
+	UsersDao usersDao;
+	
+	@Override
+	public Users saveUser(Users user) {
+		
+		return usersDao.save(user);
+	}
+
+	
+}
+
+
+
+--------------------controller
+ 
+ package com.example.login.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.login.model.Users;
+import com.example.login.service.UserService;
+
+@CrossOrigin
+@RestController
+@RequestMapping("users")
+public class UserController {
+
+	
+	@Autowired
+	UserService userService;
+	
+	@PostMapping
+	public ResponseEntity<Users> saveuser(@RequestBody Users user)
+	{
+	
+		Users savedUser= userService.saveUser(user);
+		return new ResponseEntity<Users>(savedUser,HttpStatus.OK);
+		
+	}
+}
+
+----------------------------------------------angular 
+
+-------------app.module.ts 
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
+import { RegComponent } from './reg/reg.component';
+@NgModule({
+  declarations: [
+    AppComponent,
+    RegComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+-------model 
+
+ng g s users 
+ng g c reg 
+
+
+export class User{
+
+ email='';
+password='';
+
+cpassword='';
+contact=0;
+securityQuestion='';
+securityAnswer='';
+	
+
+profilePic='';
+
+
+}
+
+----------------service 
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { User } from 'src/user.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UsersService {
+
+  constructor(private http:HttpClient) { }
+
+
+
+ registerUser(user:User)
+ {
+
+  return this.http.post<User>('http://localhost:1234/users',user);
+ } 
+
+
+
+}
+
+
+
+-----------------reg ts 
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { User } from 'src/user.model';
+import { UsersService } from '../users.service';
+
+@Component({
+  selector: 'app-reg',
+  templateUrl: './reg.component.html',
+  styleUrls: ['./reg.component.css']
+})
+export class RegComponent implements OnInit {
+
+  constructor(private userService:UsersService) { }
+
+  ngOnInit(): void {
+  }
+
+user=new User();
+  addUser(regForm:NgForm)
+  { 
+
+    if(regForm.valid)
+    {
+
+      this.user.profilePic=this.pic;
+    this.userService.registerUser(this.user).subscribe(
+      data=>{
+        alert('user registered') 
+      },
+      error=>{
+        console.log(error)
+      }
+    )
+    }    
+    else
+    {
+      alert ('somthing is wrong')
+    }
+
+    
+
+  }
+
+pic='';
+  onFileUpload(fileInput:any)
+  {
+  
+   let rdr= new FileReader();
+  
+   rdr.onload = (e:any)=>{
+  let img=new Image();
+  img.src=e.target.result;
+  
+  img.onload = rs=>{
+    this.pic=e.target.result;
+  }
+   }
+  
+   rdr.readAsDataURL(fileInput.target.files[0]);
+  
+  
+  }
+  
+}
+
+
+-----------reg html 
+
+<p>reg works! new</p>
+
+
+<form #regForm="ngForm" (ngSubmit)="addUser(regForm)">  
+    <table> 
+<tr>  
+   <td> Email: </td>
+   <td>  
+<input type="text" name="email" [(ngModel)]="user.email">
+</td>
+</tr>
+
+    <tr>  
+    <td> Password </td>
+    <td>  
+ <input type="password" name="password" [(ngModel)]="user.password">
+ </td>
+ </tr>
+ 
+ <tr>  
+    <td> Confirm Password: </td>
+    <td>  
+ <input type="password" name="cpassword" [(ngModel)]="user.cpassword">
+ </td>
+ </tr>
+ 
+
+ <tr>  
+    <td> Contact: </td>
+    <td>  
+ <input type="number" name="contact" [(ngModel)]="user.contact">
+ </td>
+ </tr>
+
+ <tr>  
+    <td> Security Question : </td>
+    <td>  
+     <select name="secQuestion" [(ngModel)]="user.securityQuestion"> 
+<option> name of first school</option>
+<option> fvrt food</option>
+<option> fvrt sport</option>
+     </select>
+    
+</td>
+ </tr>
+
+ <tr>  
+    <td> Secutity Answer: </td>
+    <td>  
+ <input type="text" name="secAnswer" [(ngModel)]="user.securityAnswer">
+ </td>
+ </tr>
+
+ <tr>  
+    <td> Profile Pic: </td>
+    <td>  
+ <input type="file" name="profilePic" (change)="onFileUpload($event)">
+ </td>
+ </tr>
+
+
+ <tr>  
+    <td>  </td>
+    <td>  
+ <input type="submit" value="register me">
+ </td>
+ </tr>
+
+
+</table>
+</form>
+
+
+-------app.comp.html 
+
+
+
+<app-reg> </app-reg>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

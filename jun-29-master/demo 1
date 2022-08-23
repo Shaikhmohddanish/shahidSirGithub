@@ -1,0 +1,35 @@
+show dbs
+
+use wipro63
+
+db
+
+show collections
+
+db.createCollection("student"); 
+
+show collections
+
+show dbs
+
+
+db.student.drop();
+
+db.student.Drop();
+
+
+show collections
+
+db.doctors.insert(
+{
+name:"john",
+born:1986
+}
+)
+
+//select * from doctors;
+
+db.doctors.find();
+
+db.doctors.find().pretty();
+

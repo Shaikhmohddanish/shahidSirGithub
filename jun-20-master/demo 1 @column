@@ -1,0 +1,184 @@
+package com.myapp.restaurant.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Restaurant {
+
+	@Id
+	private int restId;
+	private String restName;
+	private String address;
+	private String city;
+	
+	@Column(name="user_id")
+	private int uid;
+	
+	
+	
+	public int getUid() {
+		return uid;
+	}
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public int getRestId() {
+		return restId;
+	}
+	public void setRestId(int restId) {
+		this.restId = restId;
+	}
+	public String getRestName() {
+		return restName;
+	}
+	public void setRestName(String restName) {
+		this.restName = restName;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	public Restaurant() {
+		// TODO Auto-generated constructor stub
+	}
+	public Restaurant(int restId, String restName, String address) {
+		super();
+		this.restId = restId;
+		this.restName = restName;
+		this.address = address;
+	}
+	@Override
+	public String toString() {
+		return "Restaurant [restId=" + restId + ", restName=" + restName + ", address=" + address + "]";
+	}
+	
+	
+	
+}
+
+
+-----------------------dao 
+package com.myapp.restaurant.dao;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+import com.myapp.restaurant.model.Restaurant;
+
+public class RestaurantDao {
+
+	
+	public Restaurant saveRestaurant(Restaurant  restaurant)
+	{
+		SessionFactory factory=new Configuration().configure().buildSessionFactory();
+		Session session= factory.openSession();
+		Transaction tx= session.beginTransaction();
+		session.save(restaurant);
+		tx.commit();
+		return restaurant;
+	}
+	
+	public Restaurant getRestaurantById(int restId)
+	{
+		SessionFactory factory=new Configuration().configure().buildSessionFactory();
+		Session session= factory.openSession();
+		Transaction tx= session.beginTransaction();
+		Restaurant restaurant= session.get(Restaurant.class,restId);
+		tx.commit();
+		if(restaurant!=null)
+		return restaurant;
+		else
+			return null;
+	}
+
+	
+	
+	public List<Restaurant> getRestaurants()
+	{
+		SessionFactory factory=new Configuration().configure().buildSessionFactory();
+		Session session= factory.openSession();
+		Transaction tx= session.beginTransaction();
+		
+	List<Restaurant> restaurants=	session.createQuery("from Restaurant").list();
+		tx.commit();
+		
+		if(restaurants.size()==0 )
+			return null;
+		else
+			return 
+					restaurants;
+	}
+	
+	
+}
+
+
+--------service 
+
+package com.myapp.restaurant.service;
+
+import java.util.List;
+
+import com.myapp.restaurant.dao.RestaurantDao;
+import com.myapp.restaurant.model.Restaurant;
+
+public class RestaurantService {
+
+	public static void main(String[] args) {
+		
+	Restaurant restaurant=new Restaurant(4, "banaglore restaurant", "R t Nagar Bangalore");
+	restaurant.setCity("Bangalore");
+	restaurant.setUid(50);
+	
+	RestaurantDao  dao=new RestaurantDao();
+	dao.saveRestaurant(restaurant);
+	}
+	
+}
+
+
+--------------------xml
+
+ <hibernate-configuration>
+    <session-factory>
+    <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
+    <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:XE</property>
+    <property name="connection.username">wipro63</property>
+    <property name="connection.password">pass</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
+    <property name="show_sql">true</property>
+    <property name="hibernate.connection.pool_size">1</property>
+    <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+    
+   
+    <property name="hbm2ddl.auto">create</property>
+       
+       <!-- create always creates a new table  -->
+       <!-- update  creates a new table if it doesnt exist else insert it in the existing table  -->
+       
+       
+        <mapping class="com.myapp.restaurant.model.Restaurant"></mapping>
+  
+      
+    </session-factory> 
+</hibernate-configuration>
+
+
+
+
+

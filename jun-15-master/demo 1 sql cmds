@@ -1,0 +1,113 @@
+
+select * from student;
+
+
+update student SET college='IIT'
+where name='raj' and college is null;
+
+update student SET sem=6, marks=77
+where name='raj' and college ='IIT';
+
+select * from student;
+
+commit;
+
+
+delete from student;
+
+select * from student;
+
+
+rollback;
+
+select * from student;
+
+
+delete from student
+where name='raj';
+
+select * from student;
+
+
+insert into student values(4,'john','5','64','DU');
+
+
+select * from student;
+
+
+create table stud1
+(
+rno int primary key,
+sname varchar(20)
+);
+
+
+select * from stud1;
+
+insert into stud1 values('101','raj');
+
+
+insert into stud1 values('102','raja');
+
+insert into stud1 values('101','rajesh');
+--error canoot insert duplicate into primary key
+
+insert into stud1 values('103','raj');
+
+
+insert into stud1 values(null,'raj');
+--error cannot insert null into primary key 
+
+
+
+select * from student;
+
+
+alter table student
+add constraint pkk1 primary key(rno);
+
+
+update student set rno=7 
+where name ='rajesh';
+
+
+select * from student;
+
+alter table student
+add constraint pkk1 primary key(rno);
+
+
+insert into student values(4,'john','5','64','DU');
+-- primary key cannort contain dupliates
+
+
+create table clg
+(
+clgname varchar(20),
+clgid int primary key
+);
+
+create table stud
+(
+rno int PRIMARY key, 
+sname varchar(30),
+cid int references clg(clgid) --foreign key
+);
+
+
+insert into clg values('JNU','101');
+insert into clg values('DU','102');
+insert into clg values('IIT','105');
+insert into clg values('IISC','104');
+
+select * from clg;
+
+
+insert into stud values('1','raj','101');
+
+insert into stud values('2','raju','104');
+
+insert into stud values('3','raj','107');
+
+
+select * from stud;

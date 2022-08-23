@@ -1,0 +1,116 @@
+
+------controller
+
+package com.example.foodservice.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.foodservice.model.Food;
+
+@RequestMapping("foodservice")
+@RestController
+public class FoodController {
+
+	List<Food> foods=new ArrayList<>();
+	
+	
+	@GetMapping
+	public ResponseEntity<Food> getFoodItem()
+	{
+		Food food=new Food(10, "Chicken Biryani", 250);
+		
+		return new ResponseEntity<Food>(food,HttpStatus.OK);
+	}
+	
+	
+	@Value("${server.port}")
+	int myServerPort;
+	
+	@GetMapping("/info")
+	public ResponseEntity<String> getServiceInfo()
+	{
+		String msg="food service running on port "+myServerPort;
+		return new ResponseEntity<String>(msg,HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/getitems")
+	public ResponseEntity<List<Food>> getFoodItems()
+	{
+		return new ResponseEntity<List<Food>>(foods,HttpStatus.OK);
+	}
+	
+
+	@PostMapping("/additem")
+	public ResponseEntity<Food> addFoodItem(@RequestBody Food food)
+	{
+		foods.add(food);
+		return new ResponseEntity<Food>(food,HttpStatus.OK);
+	}
+	
+	
+}
+
+---app.prop 
+
+server.port=1234
+spring.application.name=food
+
+
+--> run the food service as a spring boot app 
+--------------------------------------------------------
+to run the second instance 
+
+
+---app.prop 
+
+server.port=1235
+spring.application.name=food
+
+
+change the port-->  save --> and run the service again without stopping the previous one
+
+
+------------------------------------------
+
+
+to run the third instance 
+
+
+---app.prop 
+
+server.port=1236
+spring.application.name=food
+
+
+change the port-->  save --> and run the service again without stopping the previous one
+
+
+-------------------------------postman 
+
+
+http://localhost:1234/foodservice/info
+
+http://localhost:1235/foodservice/info
+
+http://localhost:1236/foodservice/info
+
+
+
+
+
+
+
+
+
+

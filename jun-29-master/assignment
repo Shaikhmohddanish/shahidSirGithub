@@ -1,0 +1,23 @@
+
+
+create a student collection with the following properties 
+
+rno
+name
+sem
+gender
+marks
+
+
+
+--> insert 10 studs recs 
+
+-> get all studs in sem 5
+-> get all female studs 
+-> get all studs passed 4th sem 
+-> get all studs who are yet to attend 4th sem 
+-> get all studs who have score more than 90 
+-> get all studs who have score less than 50 
+
+
+

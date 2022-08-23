@@ -1,0 +1,94 @@
+package demospr.wipro.demo.service;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
+import org.springframework.core.io.FileSystemResource;
+
+import demospr.wipro.demo.model.Student;
+
+public class StudentService {
+
+	public static void main(String[] args) {
+
+		
+	BeanFactory beanFactory=new XmlBeanFactory(new FileSystemResource("spring.xml"));		
+	
+	Student student=(Student)beanFactory.getBean("student");
+	Student student1=(Student)beanFactory.getBean("student");
+
+	System.out.println(student);
+	System.out.println(student1);
+		
+	student.setStudName("Tendulkar");
+
+	System.out.println("----------------------");
+	System.out.println(student);
+	System.out.println(student1);
+	
+	
+	
+	}
+}
+
+
+
+
+------------xml 
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+>
+
+<bean class="demospr.wipro.demo.model.Student" id="student" autowire="constructor" scope="prototype">
+<constructor-arg  index="1" type="String" value="Sachin">  </constructor-arg>
+<constructor-arg index="0" type="int" value="10">  </constructor-arg>
+</bean>
+
+<!-- scope singleton -> create only one object whenever we make a request to the bean same object is returned  -->
+<!-- scope prototype -> create new object whenever we make a request to the bean  -->
+
+
+<!--  autowire by type needs only one matching bean if multiple beans are found it will throw error-->
+<!--  autowire default -> no autowiring-->
+<!--  autowire by name matches the property name with the bean name and injects it-->
+<!--  autowire constructor always injects the bean by calling the constructor can be same as bytype or name -->
+
+
+
+<bean class="demospr.wipro.demo.model.Address" id="address1">
+<constructor-arg  value="karnataka">  </constructor-arg>
+<constructor-arg  value="Banaglore">  </constructor-arg>
+</bean>
+
+
+
+ <bean class="demospr.wipro.demo.model.Address" id="address">
+<constructor-arg  value="maharastra">  </constructor-arg>
+<constructor-arg  value="mumbai">  </constructor-arg>
+</bean>
+
+
+
+
+
+ <context:annotation-config/>  
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+

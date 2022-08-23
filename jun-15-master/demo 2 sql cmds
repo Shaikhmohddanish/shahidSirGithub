@@ -1,0 +1,76 @@
+--domain integrity : ensure values are in specified range 
+
+
+create table emp
+(
+ename varchar(20),
+age int check (age between 18 and 50),
+salary float
+);
+
+insert into emp values ('test','24','10000');
+
+insert into emp values ('test','18','10000');
+
+insert into emp values ('test','14','10000');
+--ERROR age is not in valid range 
+
+
+insert into emp values ('test','51','10000');
+--ERROR age is not in valid range 
+
+
+select * from emp;
+
+
+select 10 + 20 from dual;
+
+select 'sum ' || (10 + 20) as "test"  from dual;
+
+select * from dual;
+
+select 'sum ' || (10 + 20) as "test"  from student;
+
+select * from student;
+
+
+
+
+
+create table emp1
+(
+ename varchar(20),
+age int check (age between 18 and 50),
+city varchar(20)check (city in('bang','pune','mumbai'))
+);
+
+insert into emp1 values ('test','40','pune');
+
+
+insert into emp1 values ('test','40','bijapur');
+
+
+
+
+create table t
+(
+dob date
+)
+
+
+
+insert into t values('01-jan-22');
+
+
+select * from t;
+
+
+insert into t values('01-jan-2022');
+-- to_date -- to_char
+
+
+
+
+
+
+

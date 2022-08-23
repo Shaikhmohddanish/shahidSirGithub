@@ -1,0 +1,20 @@
+
+-- model users 
+
+userName/email
+password
+confirmPassword -. only for UI 
+securityQuestion
+SecurityAnswer
+contact
+gender 
+profilePic
+
+
+----> 
+create ui for the same 
+and save the users details in db 
+
+
+
+

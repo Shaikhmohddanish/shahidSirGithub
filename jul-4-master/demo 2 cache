@@ -1,0 +1,68 @@
+package com.example.cachememory;
+
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RequestMapping("democache")
+@RestController
+public class MyCacheController {
+
+
+	@Cacheable("mydata")
+	@GetMapping 
+	public ResponseEntity<String> getData()
+	{
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<String>("hello from cache controller",HttpStatus.OK);
+	}
+	
+	@CacheEvict("mydata")
+	@PostMapping 
+	public ResponseEntity<String> posttData()
+	{
+		
+		return new ResponseEntity<String>("cache cleared",HttpStatus.OK);
+	}
+	
+	
+}
+
+
+
+----------------
+
+urls 
+
+get method
+http://localhost:1234/democache
+
+
+hit multiple time and check the difference 
+
+
+post 
+http://localhost:1234/democache
+
+do a get req again
+
+http://localhost:1234/democache
+
+see the difference 
+
+
+
+
+
+

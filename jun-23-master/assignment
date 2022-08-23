@@ -1,0 +1,21 @@
+create a new project and do this
+
+------------
+create a book model 
+->isbn -> unique book identification number
+->title
+->authrName
+->rating 
+
+
+-->
+
+save
+get all books
+get book by isbn 
+delete book by isbn
+update book 
+
+
+----
+

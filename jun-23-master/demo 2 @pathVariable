@@ -1,0 +1,66 @@
+package com.demo.restdemo.controller;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.demo.restdemo.model.Player;
+
+@RestController
+@RequestMapping("employees")
+public class MyRestController {
+
+	//JSON
+	
+	@PostMapping
+	public String saveData()
+	{		
+		return "post method";
+	}
+	
+	
+	//http://localhost:1234/employees
+	@GetMapping
+	public Player getData()
+	{		
+		return new Player(5, "Dhoni","CSK");
+	}
+
+	//http://localhost:1234/employees/{name}
+	http://localhost:1234/employees/rohit
+	@GetMapping("/{name}")
+	public Player getData1(@PathVariable String name)
+	{		
+		
+		return new Player(18, name,"RCB");
+	}
+
+//http://localhost:1234/employees/{name}/{team}
+//http://localhost:1234/employees/rohit/MI
+	@GetMapping("/{name}/{team}")
+	public Player getData1(@PathVariable String name,@PathVariable String team)	{			
+		return new Player(18, name,team);
+	}
+
+	
+	
+	@PutMapping
+	public String putData()
+	{		
+		return "put mapping";
+	}
+	
+	
+	@DeleteMapping
+	public String deleteData()
+	{		
+		return "delete mapping";
+	}
+	
+	
+	
+}

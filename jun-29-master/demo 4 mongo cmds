@@ -1,0 +1,175 @@
+
+db.players.insert(
+{
+playerName:"virat",
+playerId:1,
+address:
+{
+state:"karnataka",
+city:"bangalore"
+}
+}
+);
+
+
+db.players.insert(
+{
+playerName:"rohit",
+playerId:2,
+address:
+[
+{
+state:"karnataka",
+city:"bangalore"
+},
+{
+state:"maharastra",
+city:"mumbai"
+}
+]
+}
+);
+
+
+
+db.students.drop();
+
+
+db.students.insert(
+[
+{
+rno:1,
+name:"ram",
+gender:"male",
+sem:1,
+marks:80
+},
+{
+rno:2,
+name:"rama",
+gender:"male",
+sem:1,
+marks:82
+},
+{
+rno:3,
+name:"raj",
+gender:"male",
+sem:5,
+marks:88
+},
+{
+rno:4,
+name:"rama",
+gender:"female",
+sem:5,
+marks:99
+},
+{
+rno:5,
+name:"rajeshwari",
+gender:"female",
+sem:1,
+marks:82
+}
+]
+);
+
+select gender from students
+group by gender;
+
+db.students.aggregate(
+[
+{
+$group:{_id:"$gender"}
+}
+]
+);
+
+select sum(marks),
+ gender from students
+group by gender;
+
+db.students.aggregate(
+[
+{
+$group:{_id:"$gender",
+total:{$sum:"$marks"}
+}
+}
+]
+);
+
+
+db.students.aggregate(
+[
+{
+$group:{_id:"$gender",
+max:{$max:"$marks"}
+}
+}
+]
+);
+
+select max(marks), sem
+from students
+group by sem;
+
+
+db.students.aggregate(
+[
+{
+$group:{_id:"$sem",
+max:{$max:"$marks"}
+}
+}
+]
+);
+
+select max(marks), sem
+from students
+group by sem
+having max(marks)>90
+;
+
+
+db.students.aggregate(
+[
+{
+$group:{_id:"$sem",
+maxm:{$max:"$marks"}}},
+{
+$match:{"maxm":{$gt:90}}
+}
+]
+);
+
+select max(marks), sem
+from students
+group by gender
+having max(marks)>90
+;
+
+
+db.students.aggregate(
+[
+{
+$group:{_id:"$gender",
+maxm:{$max:"$marks"}}},
+{
+$match:{"maxm":{$gt:90}}
+}
+]
+);
+
+
+db.students.aggregate(
+[
+{
+$group:{_id:"$gender",
+maxm:{$max:"$marks"}}},
+{
+$match:{"maxm":{$gte:88}}
+}
+]
+);

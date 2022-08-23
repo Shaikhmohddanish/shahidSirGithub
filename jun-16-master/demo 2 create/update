@@ -1,0 +1,53 @@
+ <hibernate-configuration>
+    <session-factory>
+    <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
+    <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:XE</property>
+    <property name="connection.username">wipro63</property>
+    <property name="connection.password">pass</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
+    <property name="show_sql">true</property>
+    <property name="hibernate.connection.pool_size">1</property>
+    <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+    
+   
+    <property name="hbm2ddl.auto">update</property>
+       
+       <!-- create always creates a new table  -->
+       <!-- update  creates a new table if it doesnt exist else insert it in the existing table  -->
+       
+       
+        <mapping class="com.myapp.restaurant.model.Restaurant"></mapping>
+  
+      
+    </session-factory> 
+</hibernate-configuration>
+
+
+
+---------------------------service 
+
+
+
+package com.myapp.restaurant.service;
+
+import com.myapp.restaurant.dao.RestaurantDao;
+import com.myapp.restaurant.model.Restaurant;
+
+public class RestaurantService {
+
+	public static void main(String[] args) {
+		
+	Restaurant restaurant=new Restaurant(4, "banaglore restaurant", "R t Nagar Bangalore");
+	
+	RestaurantDao  dao=new RestaurantDao();
+	dao.saveRestaurant(restaurant);
+	
+	System.out.println("data saved");
+		
+
+	}
+
+}
+
+
+

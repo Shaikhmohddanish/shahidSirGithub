@@ -1,0 +1,186 @@
+package com.myapp.restaurant.model;
+
+import javax.persistence.Embeddable;
+
+@Embeddable
+public class Address {
+
+	String city;
+	String state;
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	public Address() {
+		// TODO Auto-generated constructor stub
+	}
+	public Address(String city, String state) {
+		super();
+		this.city = city;
+		this.state = state;
+	}
+	@Override
+	public String toString() {
+		return "Address [city=" + city + ", state=" + state + "]";
+	}
+}
+
+------------------restaurant 
+
+
+package com.myapp.restaurant.model;
+
+import java.util.List;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Type;
+
+@Entity
+public class Restaurant {
+
+	@Id
+	private int restId;
+	private String restName;
+
+	
+	@ElementCollection
+	private List<Address> addresses;
+	
+	
+	
+	
+		
+	public List<Address> getAddresses() {
+		return addresses;
+	}
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+	@Column(name="user_id")
+	private int uid;
+
+	@Type(type="yes_no")
+	private boolean isOpen;
+	
+
+	@Transient
+	private int calcTemp;
+	
+	
+	public int getCalcTemp() {
+		return calcTemp;
+	}
+	public void setCalcTemp(int calcTemp) {
+		this.calcTemp = calcTemp;
+	}
+	public boolean isOpen() {
+		return isOpen;
+	}
+	public void setOpen(boolean isOpen) {
+		this.isOpen = isOpen;
+	}
+
+	
+	
+	public int getUid() {
+		return uid;
+	}
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
+		public int getRestId() {
+		return restId;
+	}
+	public void setRestId(int restId) {
+		this.restId = restId;
+	}
+	public String getRestName() {
+		return restName;
+	}
+	public void setRestName(String restName) {
+		this.restName = restName;
+	}
+	
+	public Restaurant() {
+		// TODO Auto-generated constructor stub
+	}
+	public Restaurant(int restId, String restName, String address) {
+		super();
+		this.restId = restId;
+		this.restName = restName;
+	
+	}
+	@Override
+	public String toString() {
+		return "Restaurant [restId=" + restId + ", restName=" + restName + ", address="  + "]";
+	}
+	
+	
+	
+}
+
+
+------------service 
+
+package com.myapp.restaurant.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.myapp.restaurant.dao.RestaurantDao;
+import com.myapp.restaurant.model.Address;
+import com.myapp.restaurant.model.Restaurant;
+
+public class RestaurantService {
+
+	public static void main(String[] args) {
+		
+	Restaurant restaurant=new Restaurant(4, "banaglore restaurant", "R t Nagar Bangalore");
+	
+	
+	Address a1= new Address("bangalore", "karnataka");
+	Address a2=new Address("pune", "maharastra");
+	
+	
+	List<Address> address=new ArrayList<>();
+	
+	address.add(a2);
+	address.add(a1);
+	
+	restaurant.setAddresses(address);
+	
+	restaurant.setUid(50);
+	restaurant.setOpen(true);
+	restaurant.setCalcTemp(500);
+	
+	RestaurantDao  dao=new RestaurantDao();
+	dao.saveRestaurant(restaurant);
+	}
+	
+}
+
+
+
+
+
+
+
+
+

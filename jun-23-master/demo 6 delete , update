@@ -1,0 +1,116 @@
+package com.example.crud.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.example.crud.dao.PlayerDao;
+import com.example.crud.model.Player;
+
+@Service
+public class PlayerService {
+
+	@Autowired
+	PlayerDao playerDao;
+	
+	
+public Player playerSave(Player player)
+{	
+	return playerDao.save(player);
+}
+
+public List<Player> getplayers()
+{	
+	return (List<Player>) playerDao.findAll();
+}
+
+
+public Player getplayerById(int playerId)
+{	
+	return playerDao.findById(playerId).get();
+}
+
+
+public Player updatePlayer(Player player)
+{	
+	return playerDao.save(player);
+}
+
+public void deletePlayer(int playerId)
+{	
+	
+	 playerDao.deleteById(playerId);
+}
+
+
+
+}
+
+--------------------------------------------controller 
+
+
+package com.example.crud.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.crud.model.Player;
+import com.example.crud.service.PlayerService;
+
+@RestController
+@RequestMapping("players")
+public class PlayerController {
+
+	@Autowired
+	PlayerService playerService;
+	
+	@PostMapping
+	public Player savePlayer(@RequestBody Player player)
+	{
+		
+		return playerService.playerSave(player);
+	}
+	
+	
+	@GetMapping
+	public List<Player> getPlayers()
+	{
+		
+		return playerService.getplayers();
+	}
+	
+	@GetMapping("{playerId}")
+	public Player getPlayerById(@PathVariable int playerId)
+	{
+		return playerService.getplayerById(playerId);
+	}
+
+	@PutMapping
+	public Player updatePlayer(@RequestBody Player player)
+	{
+		
+		return playerService.updatePlayer(player);
+	}
+	
+	@DeleteMapping("{playerId}")
+	public String deletePlayerById(@PathVariable int playerId)
+	{
+		playerService.deletePlayer(playerId);
+		return "player deleted";
+	}
+	
+}
+
+
+
+

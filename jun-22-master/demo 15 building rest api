@@ -1,0 +1,104 @@
+--> visit https://start.spring.io/
+--> download a springboot template 
+-> with web dependency 
+->java vaersion 8 
+->packaging jar
+->project maven project 
+-> language java 
+  generate ctrl 
+-------------------------------------
+import the project in workspace 
+-> right click in project explorer ->import 
+
+or file ->import
+-> general -> project from folder or archive 
+-> archive  
+->select the downloaded zip file
+->uncheck the non maven project only check maven project
+->finish 
+
+wait for the project to download all required dependencies
+
+
+-> default port of tomcat is 8080 , which is blocked in my machine by oracle
+-> so change the port 
+
+->src/main/resource 
+ application .properties 
+
+-> create restController -> ensure ur class is under the same package as main 
+
+
+------------------------------------------------------------------------------------------
+
+-----------------------------appplication.properties 
+
+
+server.port=1234
+
+
+------------------------------------controller 
+
+package com.demo.restdemo.controller;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("players")
+public class MyRestController {
+
+	
+	@PostMapping
+	public String saveData()
+	{
+		
+		return "post method";
+	}
+	
+}
+
+-----------------main 
+
+
+package com.demo.restdemo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Wipro63MyFirstRestApiApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(Wipro63MyFirstRestApiApplication.class, args);
+	}
+
+}
+----------------------------------------
+
+right click on project  run as spring boot project 
+
+----------------
+
+open postman 
+
+type the url use post method 
+
+method:post 
+url 
+
+http://localhost:1234/players
+
+
+
+
+
+
+
+
+
+
+
+
+

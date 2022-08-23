@@ -1,0 +1,65 @@
+[
+    {
+        "playerId": 7,
+        "playerName": "Dhoni",
+        "team": "CSK",
+        "pic": null,
+        "wickets": 0,
+        "runs": 0,
+        "matches": 0
+    },
+    {
+        "playerId": 18,
+        "playerName": "virat",
+        "team": "RCB",
+        "pic": null,
+        "wickets": 0,
+        "runs": 0,
+        "matches": 0
+    },
+    {
+        "playerId": 17,
+        "playerName": "ABD",
+        "team": "RCB",
+        "pic": null,
+        "wickets": 20,
+        "runs": 10000,
+        "matches": 150
+    },
+    {
+        "playerId": 1,
+        "playerName": "Amla",
+        "team": "SA",
+        "pic": null,
+        "wickets": 0,
+        "runs": 12000,
+        "matches": 180
+    },
+    {
+        "playerId": 11,
+        "playerName": "Morgan",
+        "team": "ENG",
+        "pic": null,
+        "wickets": 0,
+        "runs": 11000,
+        "matches": 170
+    },
+    {
+        "playerId": 12,
+        "playerName": "Root",
+        "team": "ENG",
+        "pic": null,
+        "wickets": 50,
+        "runs": 12000,
+        "matches": 140
+    },
+    {
+        "playerId": 13,
+        "playerName": "Bairstow",
+        "team": "ENG",
+        "pic": null,
+        "wickets": 0,
+        "runs": 7000,
+        "matches": 120
+    }
+]

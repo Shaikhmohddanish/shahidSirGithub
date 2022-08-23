@@ -1,0 +1,41 @@
+
+open run sql cmd
+sqldeveloper / application express
+
+create user wipro63 identified by pass;
+
+conn wirpo63 
+pass
+
+conn /as sysdba 
+
+//grant create session to wipro63
+
+//dba
+
+grant dba to wipro63
+
+conn wirpo63 
+pass
+
+sql -> tabular format 
+
+
+create table student
+(
+rno int,
+name varchar(20),
+sem int ,
+marks int,
+college varchar(20)
+);
+
+null-> unknown not equal to zero or blank space
+
+desc student;
+
+select * from student;
+
+insert into student values(1,'raj',5,60,'JNU');
+
+select * from student;

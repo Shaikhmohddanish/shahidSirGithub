@@ -1,0 +1,358 @@
+package com.example.crud.model;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+
+@Entity
+public class Player {
+	@Id
+	int playerId;
+	String playerName;
+	String team;
+	
+	@Lob
+	String pic;
+	
+	public Player(int playerId, String playerName, String team, String pic) {
+		super();
+		this.playerId = playerId;
+		this.playerName = playerName;
+		this.team = team;
+		this.pic = pic;
+	}
+	public String getPic() {
+		return pic;
+	}
+	public void setPic(String pic) {
+		this.pic = pic;
+	}
+	public Player(int playerId, String playerName, String team) {
+		super();
+		this.playerId = playerId;
+		this.playerName = playerName;
+		this.team = team;
+	}
+public Player() {
+	// TODO Auto-generated constructor stub
+}
+public int getPlayerId() {
+	return playerId;
+}
+public void setPlayerId(int playerId) {
+	this.playerId = playerId;
+}
+public String getPlayerName() {
+	return playerName;
+}
+public void setPlayerName(String playerName) {
+	this.playerName = playerName;
+}
+public String getTeam() {
+	return team;
+}
+public void setTeam(String team) {
+	this.team = team;
+}
+@Override
+public String toString() {
+	return "Player [playerId=" + playerId + ", playerName=" + playerName + ", team=" + team + "]";
+}
+
+
+
+}
+
+
+-----------------controller 
+
+package com.example.crud.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.crud.exception.PlayerAlreadyRegisteredException;
+import com.example.crud.model.Player;
+import com.example.crud.service.PlayerService;
+
+@CrossOrigin
+@RestController
+@RequestMapping("players")
+public class PlayerController {
+
+	@Autowired
+	PlayerService playerService;
+	
+	@PostMapping
+	public ResponseEntity<Player> savePlayer(@RequestBody Player player) throws PlayerAlreadyRegisteredException
+	{	
+		Player savedPlayer= playerService.playerSave(player);
+		return new ResponseEntity<Player>(savedPlayer,HttpStatus.OK);
+	}
+	
+	
+	@GetMapping
+	public  ResponseEntity<List<Player>> getPlayers()
+	{
+		
+	List<Player> players=  playerService.getplayers();
+		return new ResponseEntity<List<Player>>(players,HttpStatus.OK);
+	
+	}
+	
+	//http://localhost:1234/players/anything
+	
+	@GetMapping("{playerId}")
+	public ResponseEntity<Player> getPlayerById(@PathVariable int playerId)
+	{
+		Player foundPlayer= playerService.getplayerById(playerId);
+	return new ResponseEntity<Player>(foundPlayer,HttpStatus.OK);
+	}
+
+	
+	//http://localhost:1234/players/team/RCB
+	@GetMapping("team/{team}")
+	public ResponseEntity<List<Player>> getPlayerByTeam(@PathVariable String team)
+	{
+		List<Player> foundPlayers= playerService.findByTeam(team);
+	return new ResponseEntity<List<Player>>(foundPlayers,HttpStatus.OK);
+	}
+	
+	//http://localhost:1234/players/search/PLAYERNAME/TEAM
+	@GetMapping("search/{playerName}/{team}")
+	public  ResponseEntity<Player> findByNameAndTeam(@PathVariable String playerName,@PathVariable String team)
+	{
+		System.out.println(playerName+" "+team);
+		Player foundPlayer= playerService.findByNameAndTeam(playerName, team);
+		System.out.println(foundPlayer);
+		return new ResponseEntity<Player>(foundPlayer ,HttpStatus.OK);
+	}
+
+	
+	
+	
+	
+	@PutMapping
+	public ResponseEntity<Player> updatePlayer(@RequestBody Player player)
+	{
+		
+		Player updatdPlayer= playerService.updatePlayer(player);
+		return new ResponseEntity<Player>(updatdPlayer,HttpStatus.OK);
+	}
+	
+	@DeleteMapping("{playerId}")
+	public ResponseEntity<String> deletePlayerById(@PathVariable int playerId)
+	{
+		playerService.deletePlayer(playerId);
+		return new  ResponseEntity<String>("player deleted ",HttpStatus.OK);  
+	}
+	
+}
+
+
+-----------------------------angular 
+
+NOTE : open the project wipro63http createdduring angular classes
+
+
+----model
+ 
+
+export class Player
+{
+
+playerName:string='';
+playerId=0;
+team='';
+pic:string='';
+}
+
+
+
+
+-----------------service 
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Player } from './player.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PlayerService {
+
+  constructor(private http:HttpClient) { }
+
+
+  getplayers()
+  {
+   return this.http.get<Player[]>('http://localhost:1234/players');
+  }
+
+  addplayer(player:Player)
+  {
+ 
+    return this.http.post<Player>('http://localhost:1234/players',player);
+
+  }
+
+  getplayer(id:number)
+  {
+   return this.http.get<Player>(`http://localhost:1234/players/${id}`);
+  }
+
+
+  deleteplayer(id:number)
+  {
+   return this.http.delete<any>(`http://localhost:1234/players/${id}`);
+  }
+
+
+  updateplayer(id:number,player:Player)
+  {
+   return this.http.put<Player>(`http://localhost:3000/players`,player);
+  }
+
+
+
+}
+
+---------------app.comp.html 
+
+
+
+<app-addplayer> </app-addplayer>
+
+
+
+<table border="2px"> 
+
+  <tr>
+  <td> id</td>
+   <td>player name</td>
+  <td>team</td>
+  <td>pic</td>
+  
+  </tr>
+
+
+  <tr *ngFor="let player of players">
+    <td> {{player.playerId}}</td>
+
+    <td>{{player.playerName}}</td>
+    <td>{{player.team}}</td>
+    
+    <td><img [src]="player.pic"  width="150px"/> </td>
+    
+
+
+    </tr>
+  
+
+</table>
+
+<br>
+
+
+<div>  searched player
+<br>
+
+<app-searchplayer> </app-searchplayer>
+
+
+</div>
+
+
+----------------search .htmnl 
+
+
+    <p>searchplayer works!</p>
+
+
+    <input type="number" [(ngModel)]="id"> 
+    <button (click)="searchPlayer()"> search  </button>
+
+    <button (click)="deletePlayer()"> delete  </button>
+
+    <div *ngIf="show"> 
+    Name : <input type="text" [(ngModel)]="player.playerName">
+        <br>
+    playerId : {{player.playerId}}
+    <br>
+    Name : <input type="text" [(ngModel)]="player.team">
+
+    <button (click)="updatePlayer()"> update  </button>
+
+</div>
+
+
+
+
+----------------add.player.html 
+
+
+<p>addplayer works!</p>
+
+
+NAME : <input type="text" [(ngModel)]="player.playerName">;
+<br>
+
+player Id :
+<input type="text" [(ngModel)]="player.playerId">;
+
+<br>
+team:
+<input type="text" [(ngModel)]="player.team">;
+
+<br>
+<img [src]="pic" width="100px">
+
+
+
+<br>
+team:
+<input type="file" (change)="onFileUpload($event)">;
+
+
+
+<button  (click)="addplayer()"> add player </button> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
