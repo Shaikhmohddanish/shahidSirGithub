@@ -1,0 +1,42 @@
+
+
+<form  #anyvar="ngForm" (ngSubmit)="sub(anyvar)"> 
+
+<input type="text" name="uname" ngModel>
+<input type="text" name="lastname" ngModel> 
+<input type="text" name="emailid" ngModel>
+
+<input type="submit"> 
+</form>
+
+
+----------------------ts 
+
+
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, NgForm, RequiredValidator, Validators } from '@angular/forms';
+import { userNameValidator } from 'src/username.validator';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'wipro63new';
+
+
+sub(regform:NgForm)
+{
+
+  console.log(regform.value)
+}
+
+}
+
+//valid
+//touched
+//dirty
+//errors
+
+

@@ -1,0 +1,3 @@
+--> create a new angular project named demo2 
+-> create a new html page in it and connect that html page to the root component . 
+-> change the name of root component to my-root

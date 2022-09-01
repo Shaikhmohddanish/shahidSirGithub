@@ -1,0 +1,11 @@
+
+
+{{test()}}
+
+{{sum(10,50)}}
+
+<button (click)="print()"> click me </button>
+
+<button (dblclick)="print()"> click me twice </button>
+
+<button (mouseenter)="print()"> move mouse here </button>

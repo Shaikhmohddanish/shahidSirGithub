@@ -1,0 +1,10 @@
+
+-> create a input type and bind a var(mytype) to type property of input 
+
+
+-> create a checkbox and on click of it .if check box is slected set the type property of input type
+ created above to text(mytype) else make it  password (mytype)
+
+ 
+
+-> create an array for states and a multi dim array for cities for the respective states created .. fill the cities dropdown based on the state selected 

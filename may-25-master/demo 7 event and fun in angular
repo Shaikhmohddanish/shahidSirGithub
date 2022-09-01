@@ -1,0 +1,63 @@
+
+------------app.comp.ts 
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+
+  constructor()
+  {
+
+}
+
+
+  test()
+  {
+
+    console.log('my function');
+  }
+  
+  sum(x:number,y:number):number
+  {
+
+    console.log('my function  val x = '+x);
+    return x+y;
+  }
+
+  print()
+  {
+    alert('hello world');
+  }
+
+
+}
+
+
+----------app.comp.html 
+
+
+
+
+
+{{test()}}
+
+{{sum(10,50)}}
+
+<button (click)="print()"> click me </button>
+
+
+
+
+
+
+
+
+
+
+

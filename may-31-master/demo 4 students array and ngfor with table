@@ -1,0 +1,65 @@
+
+import { Component } from '@angular/core';
+import { Student } from 'src/student.model';
+import { PrintService } from './print.service';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  students:Student[]=[];
+
+
+
+  constructor()
+  {
+
+    let stud1=new Student('raju','DU',96,7);
+    let stud2=new Student('raja','IIT',97,7);
+    let stud3=new Student('rajeshwari','JNU',99,7);
+
+    this.students.push(stud1);
+    this.students.push(stud2);
+    this.students.push(stud3);
+
+
+    console.log(this.students[0]);
+
+  }
+
+}
+
+
+
+-----------------------html 
+
+
+
+<table border="2px" width="80%">
+
+    <tr>  
+<td> NAME</td>
+<td> COLLEGE NAME</td>
+<td> SEM </td>
+<td> MARKS</td>
+    </tr> 
+
+    <tr *ngFor="let student of students">  
+        <td> {{student.name}}</td>
+        <td>{{student.college}}</td>
+        <td> {{student.sem}}</td>
+        <td> {{student.marks}}</td>
+            </tr> 
+        
+
+
+
+</table>
+
+
+
+
+

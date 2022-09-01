@@ -1,0 +1,64 @@
+
+
+<form [formGroup]="regForm" (ngSubmit)="sub()"> 
+
+<input type="text" formControlName="uname" required="">
+<input type="text" formControlName="lname" minlength="3"> 
+<input type="text" formControlName="email">
+
+<input type="submit"> 
+</form>
+
+
+---------------ts 
+
+
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, RequiredValidator, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'wipro63new';
+
+
+  regForm=new FormGroup(
+    {
+      uname:new FormControl(),
+      lname:new FormControl(),
+      email:new FormControl()
+  
+
+    }
+
+
+    )
+
+    
+    sub()
+    {
+      console.log(this.regForm.valid);
+      console.log(this.regForm.value);
+      console.log(this.regForm.controls['uname'].value);
+      if(this.regForm.valid)
+      {
+        alert('all controls valid')
+      }
+      else
+      {
+        alert('something went wrong');
+      }
+    
+    }
+
+}
+
+//valid
+//touched
+//dirty
+//errors
+
+

@@ -1,0 +1,25 @@
+--> give dynamic text on show hide password in previous example
+
+--> using style binding bind text-size of any text on html page 
+
+
+
+-> crate + button and - button on click of plus add + 5 to size of text on click of minus substract 5
+
+--> ng switch 
+
+create a textbox to accept the marks of a student . based on the marks entered give a grade to the stud . 
+and based on the grade color the div where the score is displayed 
+
+
+80+ A -- bg success
+70+ B  -- bg primary 
+60 + C  -- bg info
+50 + D  --> bg-warning
+else fail  bg-danger
+
+
+
+
+
+

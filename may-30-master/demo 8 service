@@ -1,0 +1,133 @@
+
+to create a servie 
+
+ng g s print 
+
+
+--------app.comp.html 
+
+{{msg}}
+
+
+<p style="background-color: 'red';"> 
+<app-footer> </app-footer>
+
+</p>
+
+--------app.comp.ts 
+
+
+import { Component } from '@angular/core';
+import { PrintService } from './print.service';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  msg;
+  //inject printService
+  
+  // prntSrv:PrintService;
+  // constructor(prntSrv:PrintService)
+  // {
+  //   this.prntSrv=prntSrv;
+  // }
+
+
+  constructor(private prntSrv:PrintService)
+  {
+  }
+
+
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+   
+   this.msg= this.prntSrv.printHello();
+    
+    
+  }
+
+
+}
+
+
+------footer.html 
+
+footer component {{msg}}
+
+-----------footer.ts 
+
+
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PrintService } from '../print.service';
+
+@Component({
+  selector: 'app-footer',
+  templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.css']
+})
+export class FooterComponent implements OnInit {
+
+  constructor(private ps:PrintService) { }
+
+  msg;
+  ngOnInit(): void {
+    this.msg=this.ps.printHello();
+    
+
+  }
+
+}
+
+
+
+-----------------service 
+
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PrintService {
+
+  constructor() { }
+
+  printHello()
+  {
+    return 'hello from the service';
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

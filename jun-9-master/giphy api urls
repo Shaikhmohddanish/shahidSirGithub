@@ -1,0 +1,10 @@
+
+trending 
+
+
+https://api.giphy.com/v1/gifs/trending?api_key=3SZ34Ukz3s1DYZhrHnhHInO5VUWSn2Gb&limit=25&rating=g
+
+
+search 
+
+https://api.giphy.com/v1/gifs/search?api_key=3SZ34Ukz3s1DYZhrHnhHInO5VUWSn2Gb&q=YOUR_SEARCH_TEXT&limit=25&offset=0&rating=g&lang=en

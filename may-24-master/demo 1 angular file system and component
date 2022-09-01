@@ -1,0 +1,70 @@
+
+
+--> click on app folder in the left pane - > create new file name it as mypage.html 
+
+
+
+-----index.html
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>my page </title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+
+  
+ <app-root1></app-root1>
+</body>
+</html>
+
+------app.comp.ts 
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './mypage.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'wiprob63';
+}
+
+------------------mypage.html 
+
+
+
+
+<h1>
+
+    hello world
+</h1> 
+
+-----app.comp.css
+h1{
+
+    background-color: red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

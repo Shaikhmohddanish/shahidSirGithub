@@ -1,0 +1,86 @@
+Note : app.module.ts this file defines the modules used in the application 
+
+to implement 2 way data binding we have to import formsmodule in app.module.ts 
+
+----------app.module.ts
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+------app.comp.html 
+
+
+
+
+
+
+
+hello : {{name}}
+
+
+<input type="text" [(ngModel)]="name">
+
+
+<button (click)="changeVal()"> CLICK ME </button>
+
+
+
+------app.comp.ts 
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  name='JOHN';
+
+
+  changeVal()
+  {
+    this.name="the rock";
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

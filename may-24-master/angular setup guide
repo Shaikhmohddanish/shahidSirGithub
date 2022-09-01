@@ -1,0 +1,24 @@
+install nodejs from nodejs.org website 
+
+open cmd and type the below cmds 
+
+npm install -g angular
+
+npm install -g typescript
+
+npm install -g @angular/cli
+
+ng version
+
+*Create folder and redirect to the folder in the terminal*
+
+
+ng new angulardemo1
+
+install visual studio code open visual studio code ->file->open folder->select the  angular project folder which was created before by the cmd 
+
+
+Terminal->change default terminal to cmd(powershell->select command prompt) (click on the downdown arrow in terminal select default profile and select cmd in it)
+Terminal->new terminal.
+
+ng serve -o 

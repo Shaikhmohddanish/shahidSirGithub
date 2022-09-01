@@ -1,0 +1,82 @@
+
+----------app.module.ts
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
+//+
+
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule //+
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+-----------------app.comp.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+num1=0;
+num2=0;
+
+sumval=0;
+
+
+ sum()
+  {
+    this.sumval= this.num1+this.num2;
+  }
+
+}
+
+
+
+---------------app.comp..html
+
+
+
+
+
+
+<input type="number" [(ngModel)]="num1">
+<input type="number" [(ngModel)]="num2">
+
+
+<button (click)="sum()"> sum </button>
+
+
+sum  of the given number is : {{sumval}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

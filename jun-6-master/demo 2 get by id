@@ -1,0 +1,166 @@
+---- ng g c searchplayer
+
+
+------------service
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Player } from './player.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PlayerService {
+
+  constructor(private http:HttpClient) { }
+
+
+  getplayers()
+  {
+   return this.http.get<Player[]>('http://localhost:3000/players');
+  }
+
+  addplayer(player:Player)
+  {
+ 
+    return this.http.post<Player>('http://localhost:3000/players',player);
+
+  }
+
+  getplayer(id:number)
+  {
+   return this.http.get<Player>(`http://localhost:3000/players/${id}`);
+  }
+
+
+}
+
+
+
+----------search.comp.html 
+
+
+
+<p>searchplayer works!</p>
+
+
+<input type="number" [(ngModel)]="id"> 
+<button (click)="searchPlayer()"> search  </button>
+
+
+<div *ngIf="show"> 
+Name : {{player.playerName}}
+<br>
+playerId : {{player.playerId}}
+<br>
+team : {{player.team}}
+</div>
+
+
+
+
+
+
+----search.ts 
+
+
+import { Component, OnInit } from '@angular/core';
+import { Player } from '../player.model';
+import { PlayerService } from '../player.service';
+
+@Component({
+  selector: 'app-searchplayer',
+  templateUrl: './searchplayer.component.html',
+  styleUrls: ['./searchplayer.component.css']
+})
+export class SearchplayerComponent implements OnInit {
+
+  constructor(private playerService:PlayerService) { }
+
+  ngOnInit(): void {
+
+   // this.searchPlayer();
+
+  }
+
+player:Player=new Player();
+id:number=0;
+show=false;
+  searchPlayer()
+  {
+this.show=true;
+
+    this.playerService.getplayer(this.id).subscribe(
+data=>{
+  this.player=data;
+},
+error=>{
+alert('cannot find id');
+}
+
+    )
+
+  }
+
+
+}
+
+
+
+
+
+
+
+---------app.comp.html 
+
+
+
+<app-addplayer> </app-addplayer>
+
+
+
+<table> 
+
+  <tr>
+  <td> id</td>
+  <td>player id</td>
+  <td>player name</td>
+  <td>team</td>
+  
+  </tr>
+
+
+  <tr *ngFor="let player of players">
+    <td> {{player.id}}</td>
+    <td>{{player.playerId}}</td>
+    <td>{{player.playerName}}</td>
+    <td>{{player.team}}</td>
+    
+    </tr>
+  
+
+</table>
+
+<br>
+
+
+<div>  searched player
+<br>
+
+<app-searchplayer> </app-searchplayer>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

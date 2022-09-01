@@ -1,0 +1,40 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+ 
+  title = 'wiprob63';
+
+name:string='';
+
+username='JOHN';
+
+owner='raj'
+
+
+// y:number='hello';
+//error y is declared as numnber cannot assign string value to it
+
+
+x:number;
+y:any;
+constructor()
+{
+
+ //this.x=false; 
+this.x=10;  
+
+this.y=50;
+this.y=false;
+this.y='hello';
+
+
+}
+
+
+}
+

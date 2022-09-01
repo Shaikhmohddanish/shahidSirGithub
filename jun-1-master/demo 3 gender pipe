@@ -1,0 +1,272 @@
+---------------model 
+
+export class Student
+{
+
+    name:string;
+    college:string;
+    marks:number;
+    sem:number;
+    gender:string='';
+
+
+}
+
+-----------service
+
+
+import { Injectable } from '@angular/core';
+import { Student } from 'src/student.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class StudentService {
+
+  students:Student[]=[];
+
+  constructor() {
+    this.students=[
+      {name:'JOHN',college:'JNU',marks:70,sem:5,gender:'male'},
+      {name:'JOHN CENA',college:'DU',marks:71,sem:1,gender:'MALE'},
+      {name:'ROCK',college:'JNU',marks:75,sem:7,gender:'Male'},
+      {name:'BROCK',college:'JNU',marks:77,sem:5,gender:'male'},
+      {name:'sushmita',college:'JNU',marks:77,sem:5,gender:'female'},
+      {name:'aishwarya',college:'JNU',marks:77,sem:5,gender:'female'},
+      {name:'lara',college:'JNU',marks:77,sem:5,gender:'female'}
+
+
+    ]
+  
+
+   }
+
+
+
+   getStudents()
+   {
+
+  return this.students;
+   }
+
+   addStudent(student:Student)
+   {
+
+    this.students.push(student);
+   }
+
+   deleleStudent(student:Student)
+   {
+
+  let idx= this.students.indexOf(student);
+  
+    this.students.splice(idx,1);
+
+   }
+
+
+
+  }
+
+-------------------pipe 
+
+import { Pipe, PipeTransform } from "@angular/core";
+
+@Pipe({'name':'gender'})
+export class GenderPipe implements PipeTransform
+{
+    transform(value: any, gender:string) {
+        if(gender.toLowerCase() =='male')
+        return 'Mr. '+value;
+        
+        else if(gender.toLowerCase()=='female')
+        return 'Miss '+value
+
+        return value;
+         }
+
+    
+}
+
+
+-----------------app.module.ts
+
+  import { BrowserModule } from '@angular/platform-browser';
+  import { NgModule } from '@angular/core';
+
+  import { AppRoutingModule } from './app-routing.module';
+  import { AppComponent } from './app.component';
+  import { FormsModule } from '@angular/forms';
+  import { FooterComponent } from './footer/footer.component';
+  import { AddstudentComponent } from './addstudent/addstudent.component';
+  import { mypipe } from 'src/mypipe.pipe';
+  import { GenderPipe } from './gender.pipe';
+
+  @NgModule({
+    declarations: [
+      AppComponent,
+      FooterComponent,
+      AddstudentComponent,
+      mypipe,
+      GenderPipe
+    ],
+    imports: [
+      BrowserModule,
+      AppRoutingModule,
+      FormsModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
+  })
+  export class AppModule { }
+
+
+----------------app.comp.html 
+
+
+
+<table border="2px" width="80%">
+
+    <tr> 
+<td> 
+name
+
+</td>
+
+<td> 
+college    
+    </td>
+    
+    <td> 
+       marks 
+        </td>
+        
+        <td> 
+            sem
+            </td>
+            
+            <td> 
+               gender 
+                </td>
+                
+ 
+    </tr>
+
+
+
+    <tr *ngFor="let student of students"> 
+        <td> 
+            {{student.name|gender:student.gender}}
+        
+        </td>
+        
+        <td> 
+            {{student.college}}
+        </td>
+            
+            <td> 
+                {{student.marks}}
+
+                </td>
+                
+                <td> 
+                    {{student.sem}}
+
+                    </td>
+                    
+                    <td> 
+                        {{student.gender}}
+
+                        </td>
+                        
+         
+            </tr>
+        
+
+</table>
+
+
+
+---------------ap.comp.ts 
+
+
+
+import { Component } from '@angular/core';
+import { Student } from 'src/student.model';
+import { PrintService } from './print.service';
+import { StudentService } from './student.service';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+
+students:Student[]=[];
+
+
+constructor(private studService:StudentService)
+{
+
+
+}
+
+ngOnInit(): void {
+  //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+  //Add 'implements OnInit' to the class.
+  
+  this.students= this.studService.getStudents();
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

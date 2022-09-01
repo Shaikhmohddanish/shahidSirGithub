@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="wiprostyle.css">	
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+</head>
+
+<body>
+
+<div> 
+
+this is simple div tag
+</div>
+
+
+<ul> 
+
+<li > home </li>
+
+<li class="fa fa-home"> home </li>
+
+<li class="fa fa-envelope"> contact </li>
+
+<li class="fa fa-trash"> delete </li>
+
+<li class="fa-solid fa-spinner">  </li>
+
+<li class="fa-solid fa-crosshairs"> test</li>
+
+
+</ul>
+
+</body>
+
+</html>
+
+
+------------------------wiprostyle.css
+
+
+div{
+
+	background-color: red;
+}

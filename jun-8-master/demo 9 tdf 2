@@ -1,0 +1,13 @@
+
+
+<form  #anyvar="ngForm" (ngSubmit)="sub(anyvar)"> 
+
+Name :<input type="text" name="uname" #uname="ngModel" ngModel required>
+<p *ngIf="!uname.valid  && uname.touched"> must enter user name</p> 
+
+
+<input type="text" name="lastname" ngModel> 
+<input type="text" name="emailid" ngModel>
+
+<input type="submit"> 
+</form>

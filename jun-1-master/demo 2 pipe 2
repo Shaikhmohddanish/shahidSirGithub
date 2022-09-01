@@ -1,0 +1,90 @@
+---app.comp.html 
+
+{{name|uppercase}}
+
+<br>
+{{name|mypipe}}
+
+
+<br>
+{{name1|mypipe:'male'}}
+
+<br>
+{{name2|mypipe:'female'}}
+
+
+<br>
+{{money|currency:'INR'}}
+
+
+-----------app.comp.ts 
+
+
+import { Component } from '@angular/core';
+import { Student } from 'src/student.model';
+import { PrintService } from './print.service';
+import { StudentService } from './student.service';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  name="rohit sharma";
+
+
+  name1="virat kohli";
+
+
+  name2="harpreet kaur";
+
+  money=50;
+
+
+}
+
+
+
+------mypipe.pipe.ts
+
+import { Pipe, PipeTransform } from "@angular/core";
+
+@Pipe({'name':'mypipe'})
+export class mypipe  implements PipeTransform
+{
+
+    transform(value: any,gender:string) {
+      
+        if(gender=='male')
+        return 'Mr. '+value;
+        
+        else if(gender=='female')
+        return 'Miss '+value
+
+        return value;
+    }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

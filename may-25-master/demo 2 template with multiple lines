@@ -1,0 +1,13 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  //templateUrl: './mypage.html', // template for this component
+  template: `<h1> hello world from template </h1>
+              <h2> this is line 2 </h2>`,
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'wiprob63';
+}
+

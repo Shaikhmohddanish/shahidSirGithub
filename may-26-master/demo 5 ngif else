@@ -1,0 +1,37 @@
+
+
+<div *ngIf="a && b; else somethingels">
+    
+both are true
+</div>
+
+<ng-template #somethingels>
+<div >
+anyone is false 
+
+</div> 
+</ng-template>
+
+
+---------ts
+
+
+
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Component } from '@angular/core';
+import { TouchSequence } from 'selenium-webdriver';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+a=false;
+b=true;
+
+
+
+}
+

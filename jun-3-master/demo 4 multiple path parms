@@ -1,0 +1,162 @@
+--app.routing 
+
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AddStudentComponent } from './add-student/add-student.component';
+import { CateringGuard } from './catering.guard';
+import { ErrorComponent } from './error/error.component';
+import { LoginComponent } from './login/login.component';
+import { CateringComponent } from './services/catering/catering.component';
+import { LaundryComponent } from './services/laundry/laundry.component';
+import { ServicesComponent } from './services/services.component';
+import { WaterComponent } from './services/water/water.component';
+import { ViewStudentComponent } from './view-student/view-student.component';
+
+const routes: Routes = [
+  {path:'',redirectTo:'login',pathMatch:'full'},
+  {path:'add',component:AddStudentComponent},
+  {path:'view/:userId/:pwd',component:ViewStudentComponent},
+  {path:'login',component:LoginComponent},
+  {path:'service',component:ServicesComponent,
+  children:[
+    {path:'water',component:WaterComponent},
+    {path:'catering',component:CateringComponent,canActivate:[CateringGuard]},
+    {path:'laundry',component:LaundryComponent}
+
+  ]
+},
+  {path:'**',component:ErrorComponent}
+  
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+---------------login.ts 
+
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+
+  constructor(private router:Router) { }
+
+  username:string='';
+  password:string='';
+
+  ngOnInit(): void {
+  }
+
+  validate()
+  {
+
+    if(this.username=='root' && this.password=='123')
+    {
+     localStorage.setItem('userType','prime'); 
+      alert('valid');
+      this.router.navigate(['view',this.username,this.password]);
+      
+    }
+   else if(this.username=='user' && this.password=='123')
+    {
+      localStorage.setItem('userType','basic');
+      alert('valid');
+      this.router.navigate(['view',this.username,this.password]);
+      
+    }
+
+    else{
+      alert('invalid');
+    //do not route
+    }
+
+  }
+
+}
+
+
+
+
+-----------view .ts 
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Student } from 'src/student.model';
+import { StduentService } from '../stduent.service';
+
+@Component({
+  selector: 'app-view-student',
+  templateUrl: './view-student.component.html',
+  styleUrls: ['./view-student.component.css']
+})
+export class ViewStudentComponent implements OnInit {
+
+  students:Student[]=[];
+
+
+userName=''
+passwrd=''
+  constructor(private studService:StduentService, private actRoute:ActivatedRoute)
+  {
+
+  }
+
+  ngOnInit(): void {
+    
+    this.students=this.studService.getStudents();
+
+    this.actRoute.params.subscribe(
+      data=>{
+       this.userName=data['userId'],this.passwrd=data['pwd'];
+      }
+      
+    )
+
+  }
+
+delete(stud:Student)
+{
+
+  this.studService.deleteStudent(stud);
+
+}
+
+
+
+}
+
+
+-----------------view.html 
+
+
+
+
+<p> view component works  for {{userName}} .. {{passwrd}}</p>
+
+<table border="2px" width="80%">
+
+    <tr>  
+<td> NAME</td>
+<td> COLLEGE NAME</td>
+<td> SEM </td>
+<td> MARKS</td>
+<td> ADDRESS</td>
+    </tr> 
+
+    <tr *ngFor="let student of students">  
+        <td> {{student.name}}</td>
+        <td>{{student.college}}</td>
+        <td> {{student.sem}}</td>
+        <td> {{student.marks}}</td>
+        <td> {{student.address}}</td>
+        <td> <button (click)="delete(student)"> delete </button></td>
+            </tr> 
+</table>
+

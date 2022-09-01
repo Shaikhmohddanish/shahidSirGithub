@@ -1,0 +1,61 @@
+
+<form (ngSubmit)="getData()"> 
+
+<input type="text" [formControl]="name" required>
+  
+<input type="submit"> 
+
+</form>
+
+<button (click)="setData()"> set </button>
+
+--------------------ts 
+
+import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'wipro63new';
+
+name=new FormControl();
+
+getData()
+{
+
+  //alert('hello world')
+//alert(this.name.value);
+
+console.log('touched '+this.name.touched);
+console.log('dirty '+this.name.dirty);
+console.log('valid '+this.name.valid);
+
+console.log('errors '+this.name.errors);
+
+if(this.name.errors.required)
+{
+alert('name cannot be empty');
+}
+
+}
+
+
+setData()
+{
+
+  this.name.setValue('hello world');
+}
+
+
+}
+
+//valid
+//touched
+//dirty
+//errors
+
+

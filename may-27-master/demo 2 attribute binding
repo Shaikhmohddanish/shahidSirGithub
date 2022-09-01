@@ -1,0 +1,33 @@
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+mycolspan=2;
+
+}
+
+
+
+----html 
+
+
+
+
+<table border="2px" width="80%"> 
+    <tr> <td> test </td> <td> test </td><td> test </td>  </tr>
+    <tr> <td> test </td> <td> test </td><td> test </td>  </tr>
+    <tr> <td> test </td> <td> test </td><td> test </td>  </tr>
+    <tr> <td> test </td> <td> test </td><td> test </td>  </tr>
+    <tr> <td [attr.colspan]="mycolspan"> test </td>   </tr>
+    <tr> <td colspan="3"> test </td>   </tr>
+
+
+</table>
+
+<input type="text" [(ngModel)]="mycolspan">

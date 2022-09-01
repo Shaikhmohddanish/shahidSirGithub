@@ -1,0 +1,117 @@
+-----------index.html
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>my page </title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+
+  
+ <app-root1></app-root1>
+</body>
+</html>
+
+
+-------------app.comp.html 
+
+
+
+
+
+
+<select [(ngModel)]="selectMaker" (change)="fillCars()"> 
+
+<option *ngFor="let maker of makers"> {{maker}}</option>
+
+</select>
+
+
+
+<select> 
+
+    <option *ngFor="let car of selectedCars"> {{car}}</option>
+    
+    </select>
+    
+
+
+<br>
+<br>
+<br>
+<br>
+
+<button class="btn btn-success"> click me </button> 
+
+
+
+-------------app.comp.ts
+
+
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Component } from '@angular/core';
+import { TouchSequence } from 'selenium-webdriver';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+makers=['Audi','BMW','TATA','MARUTI','Toyota'];
+
+
+cars=[ ['Audi q3' , 'Audi q5', 'Audi q5'],['BMW x5', 'BMW xm8', 'BMW x7',],['safari','nano','nexon'],['swift','baleno','alto'],['innova','etios','glanza','uc']];
+
+
+selectMaker='select maker';
+selectedCars=[];
+
+fillCars()
+{
+  alert('maker slected '+this.selectMaker);
+
+ let idx=  this.makers.indexOf(this.selectMaker);
+  //alert(idx);
+this.selectedCars=this.cars[idx];
+
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

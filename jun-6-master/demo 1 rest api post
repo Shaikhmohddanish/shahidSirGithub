@@ -1,0 +1,131 @@
+
+ng g c addplayer
+
+json-server --watch db.json 
+
+-------service
+
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Player } from './player.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PlayerService {
+
+  constructor(private http:HttpClient) { }
+
+
+  getplayers()
+  {
+   return this.http.get<Player[]>('http://localhost:3000/players');
+  }
+
+  addplayer(player:Player)
+  {
+ 
+    return this.http.post<Player>('http://localhost:3000/players',player);
+
+  }
+
+}
+
+--------------addplayer.html 
+
+<p>addplayer works!</p>
+
+
+NAME : <input type="text" [(ngModel)]="player.playerName">;
+<br>
+
+player Id :
+<input type="text" [(ngModel)]="player.playerId">;
+
+<br>
+team:
+<input type="text" [(ngModel)]="player.team">;
+
+<button  (click)="addplayer()"> add player </button> 
+
+
+-----------addplayer.ts 
+
+
+
+import { Component, OnInit } from '@angular/core';
+import { Player } from '../player.model';
+import { PlayerService } from '../player.service';
+
+@Component({
+  selector: 'app-addplayer',
+  templateUrl: './addplayer.component.html',
+  styleUrls: ['./addplayer.component.css']
+})
+export class AddplayerComponent implements OnInit {
+
+player:Player=new Player();
+
+  constructor(private playerService:PlayerService) { }
+
+  ngOnInit(): void {
+  }
+
+
+  addplayer()
+  {
+
+
+    this.playerService.addplayer(this.player).subscribe(
+
+      data=>{
+        alert('player added');
+      },
+      error=>{
+        alert('player cannot be added');
+      }
+    )
+
+  }
+}
+
+----------app.comp.html 
+
+
+
+
+<app-addplayer> </app-addplayer>
+
+
+
+<table> 
+
+  <tr>
+  <td> id</td>
+  <td>player id</td>
+  <td>player name</td>
+  <td>team</td>
+  
+  </tr>
+
+
+  <tr *ngFor="let player of players">
+    <td> {{player.id}}</td>
+    <td>{{player.playerId}}</td>
+    <td>{{player.playerName}}</td>
+    <td>{{player.team}}</td>
+    
+    </tr>
+  
+
+</table>
+
+
+
+
+
+
+
+
+

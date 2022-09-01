@@ -1,0 +1,36 @@
+
+--------------ts 
+
+import { Component } from '@angular/core';
+
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  pcolor='red';
+
+  mypcolor="";
+  
+
+}
+
+
+---------------------html
+
+
+<p style="background-color: blue;"> this is p tag  </p>
+
+
+
+<p [style.background-color]="pcolor"> this is p tag  pcolor</p>
+
+
+<input type="text" [(ngModel)]="mypcolor">
+
+<p [style.background-color]="mypcolor"> this is p tag myp color </p>
+
+

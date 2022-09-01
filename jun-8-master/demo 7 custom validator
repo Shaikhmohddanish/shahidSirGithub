@@ -1,0 +1,108 @@
+
+---------------username.validator.ts 
+
+
+import { AbstractControl, ValidatorFn } from "@angular/forms";
+
+export function userNameValidator():ValidatorFn{
+
+
+    return(control:AbstractControl):{[key:string]:boolean}|null => {
+
+        if(control.value=='virat')
+        {
+        return {'':false};
+        }
+
+        // if( parseInt(''+control.value.length) < 5)
+        // {
+        // return {'':false};
+        // }
+
+    }
+
+        return null;
+}
+
+
+
+
+----------html 
+
+
+
+<form [formGroup]="regForm" (ngSubmit)="sub()"> 
+
+<input type="text" formControlName="uname">
+<input type="text" formControlName="lname"> 
+<input type="text" formControlName="email">
+
+<input type="submit"> 
+</form>
+
+----------------ts 
+
+
+import { Component } from '@angular/core';
+import { FormControl, FormGroup, RequiredValidator, Validators } from '@angular/forms';
+import { userNameValidator } from 'src/username.validator';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'wipro63new';
+
+
+  regForm=new FormGroup(
+    {
+      uname:new FormControl(),
+      lname:new FormControl(),
+      email:new FormControl()
+  
+
+    }
+
+
+    )
+
+    
+constructor()
+{
+  this.regForm.controls['uname'].setValidators([userNameValidator()]);
+}
+
+    sub()
+    {
+      console.log(this.regForm.valid);
+      
+      
+      if(this.regForm.valid)
+      {
+        alert('all controls valid')
+      }
+      else
+      {
+        console.log('uname '+this.regForm.controls['uname'].valid);
+        console.log('lname '+this.regForm.controls['lname'].valid);
+        console.log('email '+this.regForm.controls['email'].valid);
+        alert('something went wrong');
+      }
+    
+    }
+
+}
+
+//valid
+//touched
+//dirty
+//errors
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+
+
+--> create a html table and fill the values in html table from the multiple dimention array give below
+
+
+cars=[ ['AUDI','BMW','TATA','TOYOTA'], ['audi q3','audi q5','audi q7'], ['bmw x1','bmw x3','bmw x7'] ,['altroz','nexon','punch','safari'], 'etios','liva' ];
+
+
+
+

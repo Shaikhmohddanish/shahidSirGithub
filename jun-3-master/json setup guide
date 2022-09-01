@@ -1,0 +1,19 @@
+-> npm install -g json-server
+->ng new wipro63http 
+->open the project in vs code
+->open terminal 
+->json-server --watch db.json
+//notice a db json file is created after the above cmd open the file and delete everything in file and write the below code
+{
+"players":[] 
+}
+->save the file
+//notice ur terminal says resource is on 
+// Resources
+// http://localhost:3000/players
+//test ur api
+->install postman
+-> skip the reg open a new tab in post man 
+type in the url : http://localhost:3000/players
+
+

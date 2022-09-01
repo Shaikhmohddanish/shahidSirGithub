@@ -1,0 +1,24 @@
+
+
+-> create a player mmodel 
+ -> playerName
+ -> id
+ -> gender  --> radio button 
+ -> dob  -> input type date
+ -> noofmatches played -> number
+ -> role  -> dropdown 
+-> team  -> dropdown 
+
+
+--> register player (add player)
+-> view all players 
+-> view player by team -> dropdown 
+
+NOTE : use bootstrap to make ur page look pretty , also ensure each feature is implemented in a different component . use serive and routing whereever possible 
+
+
+
+
+
+
+

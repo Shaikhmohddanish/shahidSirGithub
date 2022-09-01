@@ -1,0 +1,66 @@
+
+
+
+
+
+
+
+
+
+actual data <p>  {{name}} </p>
+
+pipe data <p>  {{name | titlecase}} </p>
+
+
+
+pipe data <p>  {{name | uppercase}} </p>
+
+
+<button (click)="chkData()"> click me </button>
+<br>
+
+{{money}}
+<br>
+
+{{money|currency}}
+
+<br>
+
+{{money|currency:'INR'}}
+
+
+
+<br>
+
+{{money|currency:'EUR'}}
+
+
+<br>
+
+{{money|currency:'GBP'}}
+
+<p> {{now}} </p>
+
+
+<p> {{now|date}} </p>
+
+
+<p> {{now|date:'shortDate'}} </p>
+
+<p> {{now|date:'dd-MM-yyyy'}} </p>
+
+
+<p> {{now|date:'hh-mm-ss'}} </p>
+
+
+<p> slice the rock ..   {{name|slice}} </p>
+
+
+<p> slice the rock ..   {{name|slice:'2'}} </p>
+
+<p> slice the rock ..   {{name|slice:'1':'5'}} </p>
+
+
+
+
+

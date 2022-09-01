@@ -1,0 +1,33 @@
+
+----app.compo.html 
+
+<div [ngStyle]="{'background-color': 'red'}"> hello world </div> 
+
+<div [ngStyle]="{'color':'red'}"> test text color </div>
+
+<!-- <div  [ngStyle]="styleOne?{'background-color': 'red'} : {'background-color': 'blue'}" > testing  </div> -->
+
+<div [ngStyle]="{'background-color': 'green','color':mycolor,'font-size':'50px'}"> hello world </div> 
+
+
+
+---------app.comp.ts 
+
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+
+
+
+  mycolor='black';
+  styleOne=true;
+}
+

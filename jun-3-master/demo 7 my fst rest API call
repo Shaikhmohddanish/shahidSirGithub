@@ -1,0 +1,141 @@
+---> ng g s player
+
+--> app.module.ts -> add HttpClientModule ,FormsModule
+
+----------app.module.ts
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+-------------model 
+
+export class Player
+{
+
+playerName:string='';
+playerId=0;
+team='';
+id=0;
+}
+
+
+------------service
+
+
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Player } from './player.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PlayerService {
+
+  constructor(private http:HttpClient) { }
+
+
+  getplayers()
+  {
+   return this.http.get<Player[]>('http://localhost:3000/players');
+  }
+
+}
+
+
+-------------app.comp.ts 
+
+import { Component } from '@angular/core';
+import { Player } from './player.model';
+import { PlayerService } from './player.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'wipro63http';
+
+
+  players:Player[]=[];
+
+
+  constructor(private playerService:PlayerService)
+  {
+
+  }
+
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    
+    this.playerService.getplayers().subscribe(
+      data=>{
+        this.players=data;
+      },
+      error=>{
+        console.log(error)
+      }
+    )
+  }
+
+
+}
+
+------------app.comp.html 
+
+
+
+
+<table> 
+
+  <tr>
+  <td> id</td>
+  <td>player id</td>
+  <td>player name</td>
+  <td>team</td>
+  
+  </tr>
+
+
+  <tr *ngFor="let player of players">
+    <td> {{player.id}}</td>
+    <td>{{player.playerId}}</td>
+    <td>{{player.playerName}}</td>
+    <td>{{player.team}}</td>
+    
+    </tr>
+  
+
+</table>
+
+
+
+
+
+
+

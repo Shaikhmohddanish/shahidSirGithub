@@ -1,0 +1,65 @@
+
+--> app.module.ts 
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+
+
+
+---------------------ts
+
+import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'wipro63new';
+
+name=new FormControl();
+
+getData()
+{
+
+  //alert('hello world')
+alert(this.name.value);
+}
+
+}
+
+---html 
+
+
+
+<form (ngSubmit)="getData()"> 
+
+<input type="text" [formControl]="name">
+  
+<input type="submit"> 
+
+</form>

@@ -1,0 +1,55 @@
+
+---app.comp.ts
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+ 
+  title = 'wiprob63';
+
+name:string='';
+
+username='JOHN';
+
+
+}
+
+
+
+app.comp.html 
+
+
+
+
+
+<!-- interpolation -->
+
+<p> username :  {{username}} </p>
+
+10+20
+
+{{10+20}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

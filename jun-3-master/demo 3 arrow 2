@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script type="text/javascript">
+
+function test(fun) {
+	fun();
+}
+
+
+function abc() {
+	console.log('hello world')
+}
+
+
+test(abc);
+
+test( function() { console.log('hello world 2 ')})
+
+test( ()=>{ console.log('hello world call back arrow')} ) 
+
+
+
+
+
+
+</script>
+
+
+
+</head>
+
+
+<body> 
+
+
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,68 @@
+
+import { Component } from '@angular/core';
+import { Student } from 'src/student.model';
+import { PrintService } from './print.service';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  student:Student;
+
+
+
+  constructor()
+  {
+
+   this.student=new Student('raj','JNU',90,5);
+  
+   console.log(this.student);
+  
+
+   
+   console.log(this.student.college);// student.getCollege()
+  
+this.student.college='DU'; // student.setCollege('DU')
+
+console.log(this.student.college);
+
+console.log(this.student);
+
+
+  }
+
+}
+
+--------html 
+
+
+<!-- {{student}} -->
+
+
+
+{{student.name}}
+<br>
+{{student.college}}
+
+<br>
+
+<input type="text" [value]="student.name">
+
+<br>
+
+<input type="text" [(ngModel)]="student.name">
+
+
+
+
+
+
+
+
+
+
+
+

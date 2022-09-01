@@ -1,0 +1,79 @@
+
+click src folder-> create new file and name the file as student.model.ts
+
+
+
+----------student model
+
+export class Student
+{
+
+    name:string;
+    college:string;
+    marks:number;
+    sem:number;
+
+
+constructor(name:string,college:string,marks:number,sem:number)
+{
+
+    this.name=name;
+    this.college=college;
+    this.marks= marks;
+    this.sem=sem;
+
+}
+
+
+
+
+}
+
+------------------------app.comp.ts 
+
+
+import { Component } from '@angular/core';
+import { Student } from 'src/student.model';
+import { PrintService } from './print.service';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  constructor()
+  {
+
+   let student=new Student('raj','JNU',90,5);
+  
+   console.log(student);
+  
+
+   
+   console.log(student.college);// student.getCollege()
+  
+student.college='DU'; // student.setCollege('DU')
+
+console.log(student.college);
+
+console.log(student);
+
+
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

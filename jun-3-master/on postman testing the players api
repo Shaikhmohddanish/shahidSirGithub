@@ -1,0 +1,32 @@
+post -save
+get - get
+put - update
+delete  - delete
+
+
+post 
+http://localhost:3000/players
+
+request body->raw - json
+
+{
+    "playerName":"pandya",
+    "playerId":14,
+    "team":"GT"
+}
+
+
+get : 
+
+http://localhost:3000/players
+
+getbyid
+
+http://localhost:3000/players/1
+
+
+
+
+
+
+

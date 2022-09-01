@@ -1,0 +1,270 @@
+
+--- ng g c addstudent
+--- ng g s student
+
+'NOTE: add formsmodule in the app.module.ts
+
+
+------------------------student.service.ts
+
+import { Injectable } from '@angular/core';
+import { Student } from 'src/student.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class StudentService {
+
+  students:Student[]=[];
+
+  constructor() {
+    this.students=[
+      {name:'JOHN',college:'JNU',marks:70,sem:5},
+      {name:'JOHN CENA',college:'DU',marks:71,sem:1},
+      {name:'ROCK',college:'JNU',marks:75,sem:7},
+      {name:'BROCK',college:'JNU',marks:77,sem:5}
+    ]
+  
+
+   }
+
+
+
+   getStudents()
+   {
+
+  return this.students;
+   }
+
+   addStudent(student:Student)
+   {
+
+    this.students.push(student);
+   }
+
+   deleleStudent(student:Student)
+   {
+
+  let idx= this.students.indexOf(student);
+  
+    this.students.splice(idx,1);
+
+   }
+ }
+
+
+
+-----------------app.component.html 
+
+
+
+
+<app-addstudent> </app-addstudent>
+
+
+
+<br> 
+<br> <br> <br> 
+
+<br> 
+
+<table border="2px" width="80%">
+
+    <tr>  
+<td> NAME</td>
+<td> COLLEGE NAME</td>
+<td> SEM </td>
+<td> MARKS</td>
+    </tr> 
+
+    <tr *ngFor="let student of students">  
+        <td> {{student.name}}</td>
+        <td>{{student.college}}</td>
+        <td> {{student.sem}}</td>
+        <td> {{student.marks}}</td>
+        <td> <button (click)="delete(student)"> delete </button></td>
+            </tr> 
+</table>
+
+-------------------app.component.ts 
+
+
+
+import { Component } from '@angular/core';
+import { Student } from 'src/student.model';
+import { PrintService } from './print.service';
+import { StudentService } from './student.service';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+  students:Student[]=[];
+
+
+
+  constructor(private studService:StudentService)
+  {
+
+  }
+
+  ngOnInit(): void {
+    
+    this.students=this.studService.getStudents();
+  }
+
+delete(stud:Student)
+{
+
+  this.studService.deleleStudent(stud);
+
+}
+
+}
+
+
+---------------------addstudent.component.html 
+
+
+<p>add student</p>
+
+<table> 
+<tr> 
+  <td> Name </td> <td>   <input type="text" [(ngModel)]="studentToAdd.name" placeholder="name">
+  </td>
+</tr>
+
+<tr> 
+    <td> College Name </td> <td>   <input type="text" [(ngModel)]="studentToAdd.college" placeholder="college">
+    </td>
+  </tr>
+  
+  <tr> 
+    <td> Marks </td> <td>   <input type="text" [(ngModel)]="studentToAdd.marks" placeholder="marks">
+    </td>
+  </tr>
+  <tr> 
+    <td> Sem </td> <td>   <input type="text" [(ngModel)]="studentToAdd.sem" placeholder="sem">
+    </td>
+  </tr>
+  
+<button (click)="addStudent()"> add student </button>
+
+</table>
+
+-------------------------addstudent.component.ts 
+
+import { Component, OnInit } from '@angular/core';
+import { Student } from 'src/student.model';
+import { StudentService } from '../student.service';
+
+@Component({
+  selector: 'app-addstudent',
+  templateUrl: './addstudent.component.html',
+  styleUrls: ['./addstudent.component.css']
+})
+export class AddstudentComponent implements OnInit {
+
+  constructor(private studSrv:StudentService) { }
+
+  studentToAdd:Student=new Student();
+
+addStudent()
+{
+
+let student=new Student();
+
+student.name=this.studentToAdd.name;
+student.college=this.studentToAdd.college;
+student.sem=this.studentToAdd.sem;
+student.marks=this.studentToAdd.marks;
+
+
+this.studSrv.addStudent(student);
+
+}
+  ngOnInit(): void {
+  }
+
+}
+
+-----------student.model.ts 
+
+export class Student
+{
+
+    name:string;
+    college:string;
+    marks:number;
+    sem:number;
+
+
+    
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

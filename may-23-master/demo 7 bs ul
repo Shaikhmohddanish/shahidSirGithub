@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  
+<!--   <style type="text/css">
+	
+li{
+	display: inline;
+}
+
+  </style>
+ -->
+
+  </head>
+
+
+
+
+
+<body class="bg-danger">
+
+
+
+<ul>
+
+<li> test </li>
+<li> test </li>
+<li> test </li>
+</ul>
+
+<ul class="list-group">
+<li class="list-group-item disabled"> test bs </li>
+<li class="list-group-item active"> test bs</li>
+<li class="list-group-item list-group-item-success"> test bs</li>
+</ul>
+
+
+
+</div>
+
+
+
+
+
+<!-- a bootstrap grid system contains 12 grids -->
+
+<!-- 
+xs (for phones - screens less than 768px wide)
+sm (for tablets - screens equal to or greater than 768px wide)
+md (for small laptops - screens equal to or greater than 992px wide)
+lg (for laptops and desktops - screens equal to or greater than 1200px wide) -->
+
+</body>
+
+</html>

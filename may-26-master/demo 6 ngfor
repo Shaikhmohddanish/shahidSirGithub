@@ -1,0 +1,35 @@
+----app.conmp.html 
+
+
+<select> 
+
+<option *ngFor="let car of cars"> {{car}}</option>
+
+</select>
+
+
+
+<ul>
+    <li *ngFor="let car of cars"> {{car}}</li>    
+</ul>
+    
+
+    ---------app.comp.ts
+
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Component } from '@angular/core';
+import { TouchSequence } from 'selenium-webdriver';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+cars=['Audi','BMW','TATA','MARUTI','Toyota'];
+
+
+}
+
+

@@ -1,0 +1,52 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+
+  constructor()
+  {
+
+    this.test();
+    this.test1(50);
+  let sum=this.test2(50,60);
+console.log('sum = '+sum);  
+}
+
+
+  test()
+  {
+
+    console.log('my function');
+  }
+  
+  //duplicate function - overloading not supported
+  // test(x:number)
+  // {
+
+  //   console.log('my function');
+  // }
+
+
+
+  test1(x:number)
+  {
+
+    console.log('my function  val x = '+x);
+  }
+
+
+  test2(x:number,y:number):number
+  {
+
+    console.log('my function  val x = '+x);
+    return x+y;
+  }
+
+
+}
+

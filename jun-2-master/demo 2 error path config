@@ -1,0 +1,33 @@
+
+ng g c error 
+
+
+-------------error.comp.html 
+
+
+<p>something went wrong plz check the path</p>
+
+
+
+
+--------------------------
+
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AddStudentComponent } from './add-student/add-student.component';
+import { ErrorComponent } from './error/error.component';
+import { ViewStudentComponent } from './view-student/view-student.component';
+
+const routes: Routes = [
+  {path:'',redirectTo:'view',pathMatch:'full'},
+  {path:'add',component:AddStudentComponent},
+  {path:'view',component:ViewStudentComponent},
+  {path:'**',component:ErrorComponent}
+  
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

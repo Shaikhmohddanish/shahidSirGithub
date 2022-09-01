@@ -1,0 +1,404 @@
+ng new wiprob63routing  -> routing y , css
+ng g s Student
+ng g c viewStudent
+ng g c addStudent
+
+
+--------------------model 
+export class Student
+{
+
+    //name:string='';
+    name;
+    rollNo;
+    sem;
+    marks;
+    address;
+
+}
+
+--------------------------service 
+
+import { Injectable } from '@angular/core';
+import { Student } from 'src/student.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class StduentService {
+
+  students:Student[]=[];
+
+  constructor() { 
+
+    this.students=[
+      {name:'raj',rollNo:1,sem:5,marks:70,address:'mumbai'},
+      {name:'raju',rollNo:2,sem:5,marks:70,address:'pune'},
+      {name:'raja',rollNo:3,sem:5,marks:70,address:'bangalore'},
+      {name:'rajesh',rollNo:4,sem:5,marks:70,address:'bijapur'}
+    ]
+
+  }
+
+  getStudents()
+  {
+   return  this.students;
+  }
+
+  addStudent(student:Student)
+  {
+this.students.push(student);
+  }
+
+  deleteStudent(student:Student)
+  {
+
+let idx=this.students.indexOf(student);
+this.students.splice(idx,1);
+
+  }
+
+
+
+
+}
+
+
+----------------------------view comp.html 
+
+
+
+<p> view component works </p>
+
+<table border="2px" width="80%">
+
+    <tr>  
+<td> NAME</td>
+<td> COLLEGE NAME</td>
+<td> SEM </td>
+<td> MARKS</td>
+<td> ADDRESS</td>
+    </tr> 
+
+    <tr *ngFor="let student of students">  
+        <td> {{student.name}}</td>
+        <td>{{student.college}}</td>
+        <td> {{student.sem}}</td>
+        <td> {{student.marks}}</td>
+        <td> {{student.address}}</td>
+        <td> <button (click)="delete(student)"> delete </button></td>
+            </tr> 
+</table>
+
+----------------------view.ts 
+
+
+import { Component, OnInit } from '@angular/core';
+import { Student } from 'src/student.model';
+import { StduentService } from '../stduent.service';
+
+@Component({
+  selector: 'app-view-student',
+  templateUrl: './view-student.component.html',
+  styleUrls: ['./view-student.component.css']
+})
+export class ViewStudentComponent implements OnInit {
+
+  students:Student[]=[];
+
+
+
+  constructor(private studService:StduentService)
+  {
+
+  }
+
+  ngOnInit(): void {
+    
+    this.students=this.studService.getStudents();
+  }
+
+delete(stud:Student)
+{
+
+  this.studService.deleteStudent(stud);
+
+}
+
+
+
+}
+
+
+-----------add.comp.html 
+
+<p>add-student works!</p>
+
+<p>add student</p>
+
+<table> 
+<tr> 
+  <td> Name </td> <td>   <input type="text" [(ngModel)]="studentToAdd.name" placeholder="name">
+  </td>
+</tr>
+
+<tr> 
+    <td> Roll No </td> <td>   <input type="text" [(ngModel)]="studentToAdd.rollNo" placeholder="sem">
+    </td>
+  </tr>
+<tr> 
+    <td> Address </td> <td>   <input type="text" [(ngModel)]="studentToAdd.address" placeholder="address">
+    </td>
+  </tr>
+  
+  <tr> 
+    <td> Marks </td> <td>   <input type="text" [(ngModel)]="studentToAdd.marks" placeholder="marks">
+    </td>
+  </tr>
+  <tr> 
+    <td> Sem </td> <td>   <input type="text" [(ngModel)]="studentToAdd.sem" placeholder="sem">
+    </td>
+  </tr>
+  
+<button (click)="addStudent()"> add student </button>
+
+</table>
+
+
+ 
+-------------add.comp.ts 
+
+import { Component, OnInit } from '@angular/core';
+import { Student } from 'src/student.model';
+import { StduentService } from '../stduent.service';
+
+@Component({
+  selector: 'app-add-student',
+  templateUrl: './add-student.component.html',
+  styleUrls: ['./add-student.component.css']
+})
+export class AddStudentComponent implements OnInit {
+
+
+  studentToAdd:Student=new Student();
+
+  addStudent()
+  {
+  
+  let student=new Student();
+  
+  student.name=this.studentToAdd.name;
+  student.address=this.studentToAdd.address;
+  student.sem=this.studentToAdd.sem;
+  student.marks=this.studentToAdd.marks;
+  student.rollNo=this.studentToAdd.rollNo;
+  
+  
+  this.studSrv.addStudent(student);
+  
+  }
+  
+  
+  constructor(private studSrv:StduentService) { }
+
+  ngOnInit(): void {
+  }
+
+}
+
+
+
+-----------------app.comp.html 
+
+
+<p> Main component</p>
+
+
+<ul> 
+
+  <li  > <a routerLink="view">  view </a> </li>
+  <li > <a routerLink="add">  add </a> </li>
+
+
+</ul>
+
+
+
+<ul> 
+
+  <li  > <a href="view">  view  ahref</a> </li>
+  <li > <a href="add">  add ahref</a> </li>
+
+
+</ul>
+
+
+
+
+<div> 
+this div will have child
+
+<router-outlet> </router-outlet>
+
+</div>
+
+
+-----------app.module.ts 
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AddStudentComponent } from './add-student/add-student.component';
+import { ViewStudentComponent } from './view-student/view-student.component';
+import { FormsModule } from '@angular/forms';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    AddStudentComponent,
+    ViewStudentComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+
+--------------app-routing.module.ts 
+
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AddStudentComponent } from './add-student/add-student.component';
+import { ViewStudentComponent } from './view-student/view-student.component';
+
+const routes: Routes = [
+  {path:'add',component:AddStudentComponent},
+  {path:'view',component:ViewStudentComponent},
+  
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

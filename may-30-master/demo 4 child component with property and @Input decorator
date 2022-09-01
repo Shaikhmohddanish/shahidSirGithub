@@ -1,0 +1,128 @@
+----footer.html
+
+<p> State : {{state}}</p>
+
+<p> City : {{city}}</p>
+
+
+--footer.ts 
+
+import { Component, Input, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-footer',
+  templateUrl: './footer.component.html',
+  styleUrls: ['./footer.component.css']
+})
+export class FooterComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  @Input('state')
+  state:string='';
+
+  @Input('city')
+  city;
+
+
+
+}
+
+----------------app.comp.html 
+
+
+
+
+
+
+
+
+<div [ngStyle]="{'background-color': 'red'}"> hello world </div> 
+
+<div [ngStyle]="{'color':'red'}"> test text color </div>
+
+<!-- <div  [ngStyle]="styleOne?{'background-color': 'red'} : {'background-color': 'blue'}" > testing  </div> -->
+
+<div [ngStyle]="{'background-color': 'green','color':mycolor,'font-size':'50px'}"> hello world </div> 
+
+
+
+<p>  below is app-footer </p>
+
+
+city :  <input type="text" [(ngModel)]="city">
+
+state : <input type="text" [(ngModel)]="state">
+
+
+
+<app-footer state="maharastra" city="pune"> </app-footer>
+
+
+
+<app-footer [state]="state" [city]="city"> </app-footer>
+
+
+
+--------------app.comp.ts
+
+
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+state='';
+city='';
+
+
+  mycolor='black';
+  styleOne=true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

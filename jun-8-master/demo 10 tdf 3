@@ -1,0 +1,40 @@
+
+
+<form  #anyvar="ngForm" (ngSubmit)="sub(anyvar)"> 
+
+Name :<input type="text" name="uname" #uname="ngModel" ngModel required>
+<p *ngIf="!uname.valid  && uname.touched"> must enter user name</p> 
+
+
+<input type="text" name="lastname" ngModel minlength="4"> 
+<input type="text" name="emailid" ngModel>
+
+<input type="submit"> 
+</form>
+
+
+------------------------css 
+
+
+/* input{
+
+    border: solid red;
+} */
+
+input.ng-invalid{
+
+    border: solid red;
+}
+
+
+/* input.ng-touched{
+
+    border: solid green;
+} */
+
+
+input.ng-dirty.ng-valid{
+
+    border: solid green;
+}
+

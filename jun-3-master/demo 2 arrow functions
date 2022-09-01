@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script type="text/javascript">
+
+var sum=function(){
+	return 10+20;}
+console.log(sum());
+
+
+var sum2= ()=>{ return 40 +20} ;
+console.log(sum2());
+
+
+var sum3= (x,y)=> x+y;
+console.log(sum3(10,80))
+
+
+var test= ()=> {
+
+	console.log('testing');
+	console.log('my arrow');
+	console.log('testing');
+	console.log('testing');
+
+	return 'this is return value';
+}
+
+
+x= test();
+console.log('rv' + x);
+
+
+</script>
+
+
+
+</head>
+
+
+<body> 
+
+
+</body>
+</html>
+
+
+
+

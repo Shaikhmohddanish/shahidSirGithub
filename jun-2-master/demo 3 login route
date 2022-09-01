@@ -1,0 +1,89 @@
+--ng g c login 
+
+
+-------login.comp.html 
+
+
+<p>login works!</p>
+
+
+<input type="text" [(ngModel)]="username">
+<input type="text" [(ngModel)]="password">
+
+<button (click)="validate()">  login   </button>
+
+---------login.comp.ts 
+
+
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent implements OnInit {
+
+  constructor(private router:Router) { }
+
+  username:string='';
+  password:string='';
+
+  ngOnInit(): void {
+  }
+
+  validate()
+  {
+
+    if(this.username=='root' && this.password=='123')
+    {
+      alert('valid');
+      this.router.navigate(['view']);
+      //route
+    }
+    else{
+      alert('invalid');
+    //do not route
+    }
+
+  }
+
+}
+
+
+------------------------------app-routing.module.ts 
+
+
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AddStudentComponent } from './add-student/add-student.component';
+import { ErrorComponent } from './error/error.component';
+import { LoginComponent } from './login/login.component';
+import { ViewStudentComponent } from './view-student/view-student.component';
+
+const routes: Routes = [
+  {path:'',redirectTo:'login',pathMatch:'full'},
+  {path:'add',component:AddStudentComponent},
+  {path:'view',component:ViewStudentComponent},
+  {path:'login',component:LoginComponent},
+  {path:'**',component:ErrorComponent}
+  
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,158 @@
+
+
+---------model 
+export class Player
+{
+
+playerName:string='';
+id=0;
+team='';
+pic:string='';
+}
+------------------addplayer.html 
+
+<p>addplayer works!</p>
+
+
+NAME : <input type="text" [(ngModel)]="player.playerName">;
+<br>
+
+player Id :
+<input type="text" [(ngModel)]="player.id">;
+
+<br>
+team:
+<input type="text" [(ngModel)]="player.team">;
+
+<br>
+<img [src]="pic" width="100px">
+
+
+
+<br>
+team:
+<input type="file" (change)="onFileUpload($event)">;
+
+
+
+<button  (click)="addplayer()"> add player </button> 
+
+
+
+---------------addplayer.ts 
+
+import { Component, OnInit } from '@angular/core';
+import { Player } from '../player.model';
+import { PlayerService } from '../player.service';
+
+@Component({
+  selector: 'app-addplayer',
+  templateUrl: './addplayer.component.html',
+  styleUrls: ['./addplayer.component.css']
+})
+export class AddplayerComponent implements OnInit {
+
+player:Player=new Player();
+pic:any='';
+
+
+onFileUpload(fileInput:any)
+{
+
+ let rdr= new FileReader();
+
+ rdr.onload = (e:any)=>{
+let img=new Image();
+img.src=e.target.result;
+
+img.onload = rs=>{
+  this.pic=e.target.result;
+}
+ }
+
+ rdr.readAsDataURL(fileInput.target.files[0]);
+
+
+}
+
+  constructor(private playerService:PlayerService) { }
+
+  ngOnInit(): void {
+  }
+
+
+  addplayer()
+  {
+
+this.player.pic=this.pic;  
+this.playerService.addplayer(this.player).subscribe(
+
+      data=>{
+        alert('player added');
+      },
+      error=>{
+        alert('player cannot be added');
+      }
+    )
+
+  }
+}
+
+
+-------------------app.comp.html 
+
+
+
+<app-addplayer> </app-addplayer>
+
+
+
+<table border="2px"> 
+
+  <tr>
+  <td> id</td>
+   <td>player name</td>
+  <td>team</td>
+  <td>pic</td>
+  
+  </tr>
+
+
+  <tr *ngFor="let player of players">
+    <td> {{player.id}}</td>
+
+    <td>{{player.playerName}}</td>
+    <td>{{player.team}}</td>
+    
+    <td><img [src]="player.pic"  width="150px"/> </td>
+    
+
+
+    </tr>
+  
+
+</table>
+
+<br>
+
+
+<div>  searched player
+<br>
+
+<app-searchplayer> </app-searchplayer>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+

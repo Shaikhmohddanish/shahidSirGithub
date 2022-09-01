@@ -1,0 +1,95 @@
+ng g c services
+
+ng g c services/water
+ng g c services/catering
+ng g c services/laundry
+
+
+
+---------------------------------------- app.comp.html 
+<p> Main component</p>
+
+
+<ul> 
+  <li  > <a routerLink="view">  view </a> </li>
+  <li > <a routerLink="add">  add </a> </li>
+  <li > <a routerLink="service"> our services </a> </li>
+
+
+</ul>
+
+
+----------------service.comp.html 
+
+<p>services works!</p>
+
+<ul> 
+    <li  > <a routerLink="water"> water </a> </li>
+    <li > <a routerLink="laundry">  laundry </a> </li>
+    <li > <a routerLink="catering"> catering </a> </li>
+  
+  </ul>
+  
+
+  <router-outlet> </router-outlet>
+
+
+
+------------app-routing.module.ts 
+
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { AddStudentComponent } from './add-student/add-student.component';
+import { ErrorComponent } from './error/error.component';
+import { LoginComponent } from './login/login.component';
+import { CateringComponent } from './services/catering/catering.component';
+import { LaundryComponent } from './services/laundry/laundry.component';
+import { ServicesComponent } from './services/services.component';
+import { WaterComponent } from './services/water/water.component';
+import { ViewStudentComponent } from './view-student/view-student.component';
+
+const routes: Routes = [
+  {path:'',redirectTo:'login',pathMatch:'full'},
+  {path:'add',component:AddStudentComponent},
+  {path:'view',component:ViewStudentComponent},
+  {path:'login',component:LoginComponent},
+  {path:'service',component:ServicesComponent,
+  children:[
+    {path:'water',component:WaterComponent},
+    {path:'catering',component:CateringComponent},
+    {path:'laundry',component:LaundryComponent}
+
+  ]
+},
+  {path:'**',component:ErrorComponent}
+  
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<router-outlet> </router-outlet>

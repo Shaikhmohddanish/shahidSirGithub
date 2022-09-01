@@ -1,0 +1,41 @@
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root1', //name of the component
+  templateUrl: './app.component.html', // template for this component
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+
+testnew='hi world';
+url='';
+  constructor()
+  {
+    let test="hello world";
+   this.url=  window.location.href;
+  console.log(this.url)
+  }
+}
+
+
+
+--------------------------------html 
+
+
+{{testnew}}
+
+{{url}}
+<!-- {{test}}  connot use local var in interpolation-->
+
+<!-- {{window.location.href}} 
+cannot access dom objects in interpolation
+-->
+
+<!-- 
+{{testnew='hello'}}
+cannot initilize in a interpolation
+-->
+
+
+
